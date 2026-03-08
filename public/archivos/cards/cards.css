@@ -1,0 +1,79 @@
+ /* Configuración de la contenedora para espacio entre tarjetas */
+ .container {
+    display: flex;
+    gap: 20px; /* Espacio entre cada tarjeta */
+}
+
+/* Configuración del card */
+.card {
+    position: relative;
+    width: 300px; /* Ancho fijo del card */
+    height: 200px; /* Solo el área del icono es visible inicialmente */
+    overflow: hidden; /* Oculta .face2 hasta que se haga hover */
+    transition: height 0.5s ease; /* Transición suave de altura */
+}
+
+/* Configuración del icono (.face1-a, .face1-b, .face1-c) */
+.face1-a, .face1-b, .face1-c {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 200px; /* Altura fija del área del icono */
+    transition: background 0.5s ease;
+}
+
+/* Colores de fondo para cada face */
+.face1-a { background: #f7476f; }
+.face1-b { background: #5bbdcd; }
+.face1-c { background: #f5c65a; }
+
+/* Cambia el color de fondo de face1 al hacer hover */
+.card:hover .face1-a { background: #ff0057; }
+.card:hover .face1-b { background: #00d1b2; } /* Ejemplo de color para face1-b */
+.card:hover .face1-c { background: #ffbf00; } /* Ejemplo de color para face1-c */
+
+/* Tamaño y color del icono */
+.icon i {
+    font-size: 50px;
+    color: white;
+}
+
+/* Configuración del área de contenido (.face2) */
+.face2 {
+    position: absolute;
+    top: 200px; /* Coloca .face2 justo debajo de .face1 */
+    left: 0;
+    background: #fff;
+    width: 100%; /* Ocupa todo el ancho de su contenedor */
+    height: 200px; /* Altura fija del área de contenido */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(-100%);
+}
+
+/* Mostrar el contenido de .face2 al hacer hover */
+.card:hover {
+    height: 400px; /* Expande el card para mostrar el área de contenido */
+}
+
+.card:hover .face2 {
+    transform: translateY(0); /* Desliza .face2 hacia abajo */
+    opacity: 1;
+}.text{
+    color: white;
+    font-weight: 1000;
+    letter-spacing: 2px;
+    text-decoration: none;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: rgb(47, 10, 10);
+    font-size:24px;
+}.fa-solid.fa-id-card {
+   text-align: center;
+}

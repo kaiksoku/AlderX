@@ -1,0 +1,20 @@
+.custom-fieldset {
+    border: 1px solid #ccc; /* Color de la línea */
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    width: 850px; /* Asegúrate de que el ancho sea igual al del formulario */
+    margin-left: auto; /* Centra el fieldset en su contenedor */
+    margin-right: auto;
+}
+
+.custom-legend {
+    font-weight: bold;
+    padding: 0 10px;
+    position: absolute;
+    left: 50%; /* Centra horizontalmente */
+    transform: translateX(-50%); /* Ajusta el centro */
+    background: white; /* Fondo blanco para interrumpir la línea */
+    top: -20px; /* Ajusta para colocar el texto sobre la línea */
+}

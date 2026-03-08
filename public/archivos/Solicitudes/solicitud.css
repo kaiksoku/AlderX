@@ -1,0 +1,95 @@
+
+.card-body {
+    display: flex;
+    justify-content: space-between;
+    overflow-x: auto; /* Agrega desplazamiento horizontal si es necesario */
+        min-height: 300px; /* Ajusta el valor según tus necesidades */
+}
+
+.form-container {
+    width: 60%;
+}
+
+.order-summary {
+    width: 35%;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.order-summary h5 {
+    color: black;
+    margin-bottom: 15px;
+}
+
+.order-summary .summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.order-summary .summary-total {
+    font-weight: bold;
+    color: #1d6298;
+}
+
+/* Tarjetas de empleados seleccionados */
+#selected-employees {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.badge-employee {
+    background-color: #e0e0e0;
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 14px;
+    max-width: calc(33% - 10px);
+    position: relative;
+    flex: 1 1 calc(33.33% - 10px);
+    box-sizing: border-box;
+}
+
+.badge-name {
+    padding-right: 20px;
+}
+
+.badge-remove {
+    position: absolute;
+    top: 2px;
+    right: 6px;
+    color: #555;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.badge-remove:hover {
+    color: red;
+}
+
+/* Borde decorativo (no tocado) */
+.custom-border {
+    width: 300px;
+    height: 200px;
+    padding: 20px;
+    background-color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.custom-border::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="none" stroke="%236BA342" stroke-width="4" d="M10 10 Q25 5 50 10 Q75 15 90 10 Q95 35 80 50 Q65 65 50 80 Q35 65 20 50 Q5 35 10 10 Z"/></svg>') no-repeat center center;
+    background-size: cover;
+    pointer-events: none;
+}

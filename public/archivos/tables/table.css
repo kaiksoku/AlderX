@@ -1,0 +1,207 @@
+    /* Asegurando que la tabla tenga un diseño fijo */
+    .table {
+        table-layout: fixed; /* Fija el ancho de las celdas */
+        width: 100%;
+        max-width: 100%; /* Limita el ancho al 100% del contenedor */
+    }
+
+    /* Estableciendo un ancho mínimo para las columnas */
+    .table th, .table td {
+        word-break: break-word;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; /* Mantiene el contenido dentro de los límites */
+    }
+    /* Aplica el borde solo en los encabezados de la tabla */
+    .table thead th {
+        position: relative;
+    }
+    
+    .table thead th:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 10%; /* Ajusta según el espacio que quieras en la parte superior */
+        bottom: 10%; /* Ajusta según el espacio que quieras en la parte inferior */
+        right: 0; /* Alinea la línea al borde derecho */
+        width: 1px; /* Grosor de la línea */
+        background-color: grey; /* Color de la línea */
+    }
+
+/* Quita el borde derecho del último encabezado */
+.table thead th:last-child {
+    border-right: none;
+}
+
+    /* Asegura que cada columna ocupe el ancho disponible de manera equitativa */
+    .table th, .table td {
+        flex: 1; /* Permite que las columnas crezcan para ocupar el espacio disponible */
+        min-width: 100px; /* Ancho mínimo para cada columna, ajusta según sea necesario */
+    }
+
+    /* Establece un ancho mínimo para la tabla */
+    .table-responsive {
+        max-width: 120%; /* Limita el ancho máximo de la tabla */
+        overflow: auto; /* Permite desplazamiento en caso de que sea necesario */
+    }
+
+    .card-body {
+        overflow-x: auto; /* Agrega desplazamiento horizontal si es necesario */
+        min-height: 300x; /* Ajusta el valor según tus necesidades */
+    }
+    
+    .btn-1{
+        border: 2px solid #ca2419;
+        color: 7f6edf;
+        height: 32px;
+        width: 50px;
+        line-height: 32px; /* Igual al valor de height para centrar verticalmente */
+        text-align: center; /* Centra el texto horizontalmente */
+        display: inline-block; /* Asegura que el botón se comporte como un bloque en línea */
+        padding: 0; /* Asegura que el padding no afecte la alineación */
+        vertical-align: middle; /* Mantiene el botón alineado si está junto a otros elementos */
+    }
+    .btn-1:hover {
+    box-shadow: rgba(255, 0, 0, 1) -180px 0px 0px 0px inset;
+    color: #FFFFFF;
+}
+
+/* Aquí defines el comportamiento del icono al pasar el ratón sobre el botón */
+.btn-1:hover .fa-file-pdf {
+    color: #FFFFFF; /* Cambias el color cuando el botón es activado */
+    font-size: 20px; /* Ejemplo: puedes hacer que crezca un poco el tamaño del icono */
+}
+
+    .fa-file-pdf {
+    color: #ca2419;
+    font-size: 20px;
+    }
+    .btn-success {
+        height: 35px;
+    }
+    .fa-file-excel{
+        color: #217346;
+        font-size: 20px;
+    }
+    .btn-2{
+        border: 2px solid #217346;
+        color: 7f6edf;
+        height: 32px;
+        width: 50px;
+        line-height: 32px; /* Igual al valor de height para centrar verticalmente */
+        text-align: center; /* Centra el texto horizontalmente */
+        display: inline-block; /* Asegura que el botón se comporte como un bloque en línea */
+        padding: 0; /* Asegura que el padding no afecte la alineación */
+        vertical-align: middle; /* Mantiene el botón alineado si está junto a otros elementos */
+    }
+    .btn-2:hover {
+    box-shadow: #217346 -180px 0px 0px 0px inset;
+    color: #FFFFFF;
+    }.btn-2:hover .fa-file-excel {
+    color: #FFFFFF; /* Cambias el color cuando el botón es activado */
+    font-size: 20px; /* Ejemplo: puedes hacer que crezca un poco el tamaño del icono */
+    }
+    /* Comporttamiento del boton reportes para mostrar los botones excel y pdf*/
+    .reporte-container {
+    position: relative;
+    display: inline-block;
+    width: 110px; /* Ancho del botón "Reporte" */
+    }
+
+    .btn-reporte {
+        border: 2px solid #4A90E2;
+        width: 100%; /* Ocupa todo el ancho del contenedor */
+        height: 38px; /* Altura del botón "Reporte" */
+        color: #4A90E2
+    }
+
+    .reporte-opciones {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 110px; /* Mantiene el mismo ancho que el botón "Reporte" */
+    }
+
+    .reporte-container:hover .reporte-opciones {
+        display: flex; /* Muestra los botones en bloque flex */
+        justify-content: space-between; /* Deja espacio entre los botones */
+        align-items: center; /* Centra verticalmente los botones */
+    }
+
+    .reporte-container:hover .btn-reporte {
+        display: none;
+    }
+
+    .btn-1, .btn-2 {
+        height: 32px; /* Altura de los botones PDF y Excel */
+        width: 50px; /* Ancho de los botones PDF y Excel */
+        margin: 0; /* Elimina márgenes adicionales */
+        text-align: center; /* Centra el texto horizontalmente */
+        transform: translateY(-15px); /* Ajusta el valor para mover los botones hacia arriba */
+    }
+
+    .btn-1 i, .btn-2 i {
+        margin-right: 5px;
+    }
+
+    .btn-absolute {
+    position: relative;
+    width: 100%; /* Asegura que el botón ocupe todo el ancho */
+}
+
+.btn-absolute i {
+    position: absolute;
+    right: 10px; /* Ajusta este valor según tu diseño */
+    top: 50%;
+    transform: translateY(-50%); /* Centra el icono verticalmente */
+}
+
+
+/* Asegura que el contenedor del input y botón se mantengan en línea */
+/* Asegura que el input y el botón permanezcan en una sola línea dentro del card-body */
+.card-body .input-group-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    overflow: hidden; /* Evita que los elementos se salgan del contenedor */
+    max-width: 100%; /* Limita el ancho máximo para respetar el contenedor */
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    max-width: 300px; /* Ajusta según el ancho deseado para input y botón juntos */
+    width: 100%; /* Permite que el ancho se ajuste dentro del card-body */
+}
+
+.form-outline {
+    flex: 1; /* Permite que el input ocupe todo el espacio disponible */
+    width: 300px;
+}
+
+.input-group .btn {
+    flex-shrink: 0; /* Evita que el botón se reduzca o mueva hacia abajo */
+}
+
+/* hace que el input (campo de texto) se oculte hasta que el puntero pase sobre el boton search
+
+.form-outline {
+    display: none; /* Ocultamos el input al inicio 
+      transition: width 0.3s ease;
+      width: 300px;
+    }
+    .input-group:hover .form-outline {
+      display: inline-block;
+      width: 300px;  Puedes ajustar el tamaño del input al abrirse 
+    }
+    .input-group {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    .input-group:focus-within .form-outline {
+      display: inline-block;
+    }
+    .btn-primary{
+        border: 2px;
+    }/*
+        

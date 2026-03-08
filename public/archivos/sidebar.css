@@ -1,0 +1,97 @@
+.sidebar {
+    background: linear-gradient(90deg, #134164, #1d6298); /* Gradiente de verde claro a oscuro */
+    width: 250px;
+    padding: 15px;
+    color: white;
+    position: fixed;
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    padding-top: 56px; /* Espaciado para que no se solape con el navbar */
+    height: 100vh;
+    overflow-y: auto; /* Scroll vertical si se desborda */
+    padding-right: 8px; /* Espacio para que el scroll no tape contenido */
+    scrollbar-width: thin; /* Scroll fino en Firefox */
+}
+
+/* Scrollbar para WebKit (Chrome, Edge, Safari) */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+}
+
+/* Estilos para la lista de navegación */
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 15px; /* Espacio entre la línea y el primer elemento */
+}
+
+.sidebar ul li {
+    margin: 10px 0;
+}
+
+.sidebar ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.sidebar ul li.active a,
+.sidebar ul li a:hover {
+    background-color: #ffffff; /* Fondo blanco en el elemento activo o hover */
+    color: #1d6298; /* Texto en azul para contraste */
+}
+
+/* Estilos para los Iconos */
+.sidebar ul li a .icon {
+    background-color: #ffffff;
+    color: #1d6298;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+    margin-right: 10px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar ul li ul.nav {
+    margin-left: 20px; /* Mayor margen desde la izquierda */
+    padding-left: 20px; /* Espaciado interno adicional */
+    border-left: 1px solid #ffffff; /* Línea para destacar como submenú */
+}
+
+.sidebar ul li ul.nav li {
+    margin: 5px 0; /* Espaciado vertical entre submenús */
+}
+
+.sidebar ul li ul.nav li a {
+    font-size: 0.9rem; /* Tamaño más pequeño para diferenciar */
+    padding: 8px 15px; /* Ajustar el padding */
+    color: #ffffff; /* Mantener consistencia */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+.sidebar ul li ul.nav li a:hover {
+    background-color: #ffffff; /* Cambiar fondo en hover */
+    color: #1d6298; /* Texto azul para hover */
+}
+
+.sidebar .nav-link.active {
+    background-color: #ffffff;
+    color: #1d6298;
+    border: 1px solid #1f435f;
+    border-radius: 10px;
+}
+
+.sidebar .nav-link.active i {
+    color: #1d6298;
+}

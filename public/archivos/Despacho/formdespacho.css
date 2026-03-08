@@ -1,0 +1,109 @@
+/* =====================================================
+   FORMULARIO OPERATIVO – ESTILO SISTEMA PORTUARIO
+   ===================================================== */
+
+body {
+    background-color: #f4f6f9;
+}
+
+.container-fluid {
+    max-width: 96%;
+}
+
+/* Card */
+.card {
+    border-radius: 4px;
+    box-shadow: 0 0 0 1px #ccc;
+}
+
+/* Header */
+.card-header {
+    padding: 6px;
+    background: #e9ecef;
+}
+
+.card-header h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Body */
+.card-body {
+    padding: 10px 40px;
+}
+
+/* Secciones */
+.form-section {
+    margin-bottom: 8px;
+}
+
+/* Títulos */
+.form-section h6 {
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #bbb;
+    /*color: #1f4fd8;*/
+    color: #1f7734ff;
+}
+
+/* Labels */
+label {
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: 1px;
+    color: #333;
+}
+
+/* Inputs ultra compactos */
+.form-control,
+.form-select {
+    height: 17px !important;
+    padding: 0 3px !important;
+    font-size: 10px !important;
+    line-height: 1.1 !important;
+    border-radius: 2px !important;
+}
+
+/* Textarea */
+textarea.form-control {
+    min-height: 45px !important;
+    padding: 3px !important;
+}
+
+/* Espaciado mínimo */
+.row > [class*="col-"] {
+    margin-bottom: 3px;
+}
+
+/* Footer */
+.card-footer {
+    padding: 8px;
+    background: #f8f9fa;
+}
+
+.card-footer .btn {
+    font-size: 12px;
+    padding: 4px 18px;
+    border-radius: 4px;
+}
+/* ===== FIX SELECT2 PARA FORMULARIO COMPACTO ===== */
+.select2-container .select2-selection--single {
+    height: 17px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 17px !important;
+    font-size: 10px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 10px !important;
+}
+/* ===== LIMITE DE OPCIONES VISIBLES EN SELECT2 ===== */
+.select2-results__options {
+    max-height: 119px; /* 7 opciones aprox */
+}

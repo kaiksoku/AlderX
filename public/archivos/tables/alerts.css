@@ -1,0 +1,64 @@
+
+@keyframes slideDown {
+    from {
+        top: -100px; /* Inicia fuera de la pantalla, por encima del viewport */
+        opacity: 0; /* Transparente al inicio */
+    }
+    to {
+        top: 66px; /* Posición final del mensaje */
+        opacity: 1; /* Opacidad completa */
+    }
+}
+
+.mensaje-alert.success {
+    position: fixed; /* Fija el mensaje en una posición específica de la pantalla */
+    top: 66px; /* Posición final del mensaje */
+    right: 20px; /* Separa el mensaje de la parte derecha */
+    background: linear-gradient(90deg, #155724, #001f07); /* Gradiente de verde claro a oscuro */
+    color: #fff; /* Texto blanco */
+    padding: 15px 20px; /* Espaciado interno del mensaje */
+    border-radius: 5px; /* Bordes redondeados */
+    z-index: 1000; /* Asegura que esté encima de otros elementos */
+    box-shadow: 0 6px 10px rgba(4, 53, 16, 0.7); /* Sombra sutil */
+    display: flex; /* Usado para colocar la franja al lado del contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+    animation: slideDown 1s ease forwards; /* Aplica la animación */
+}
+
+.mensaje-alert.success::before {
+    content: ""; /* Elemento decorativo */
+    width: 5px; /* Grosor de la franja */
+    height: 100%; /* Altura total del mensaje */
+    background-color: #28a745; /* Color verde claro para la franja */
+    margin-right: 10px; /* Separación entre la franja y el contenido */
+    border-radius: 2px 0 0 2px; /* Bordes redondeados en la franja */
+}
+
+
+.mensaje-alert.danger {
+    position: fixed; /* Fija el mensaje en una posición específica de la pantalla */
+    top: 60px; /* Posición final del mensaje */
+    right: 20px; /* Separa el mensaje de la parte derecha */
+    background: linear-gradient(90deg, #4d0a0a, #1d0000); /* Gradiente de verde claro a oscuro */
+    color: #fff; /* Texto blanco */
+    padding: 15px 20px; /* Espaciado interno del mensaje */
+    border-radius: 5px; /* Bordes redondeados */
+    z-index: 1000; /* Asegura que esté encima de otros elementos */
+    box-shadow: 0 6px 10px rgba(44, 2, 2, 0.7); /* Sombra sutil */
+    display: flex; /* Usado para colocar la franja al lado del contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+    animation: slideDown 1s ease forwards; /* Aplica la animación */
+}
+
+.mensaje-alert.danger::before {
+    content: ""; /* Elemento decorativo */
+    width: 5px; /* Grosor de la franja */
+    height: 100%; /* Altura total del mensaje */
+    background-color: #470c0c; /* Color gris oscuro para la franja */
+    margin-right: 10px; /* Separación entre la franja y el contenido */
+    border-radius: 2px 0 0 2px; /* Bordes redondeados en la franja */
+}
+
+.mensaje-alert.hidden {
+    opacity: 0; /* Oculta el mensaje con opacidad */
+}

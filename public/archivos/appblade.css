@@ -1,0 +1,5 @@
+.content-custom {
+    margin-top: 40px; /* Ajuste para evitar que el contenido se solape con la navbar (66px considerando el padding de la navbar) */
+    margin-left: 300px; /* Ajuste del margen izquierdo para que no se solape con la sidebar */
+    padding: 30px; /* Espaciado interno */
+}
