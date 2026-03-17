@@ -42,7 +42,8 @@ class SalidasController extends Controller
 
     return response()->json([
         'status' => 'valido',
-        'placa'  => $chassis->chass_placa // ajusta si el nombre es otro
+        'placa'  => $chassis->chass_placa, // ajusta si el nombre es otro
+        'id'     => $chassis->chass_id // ajusta si el nombre es otro
     ]);
 }
 
@@ -64,7 +65,8 @@ public function validarGenset(Request $request)
     }
 
     return response()->json([
-        'status' => 'valido'
+        'status' => 'valido',
+        'id'     => $genset->gen_id // ajusta si el nombre es otro
     ]);
 }
 

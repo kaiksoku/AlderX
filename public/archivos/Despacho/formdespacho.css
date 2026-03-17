@@ -107,3 +107,94 @@ textarea.form-control {
 .select2-results__options {
     max-height: 119px; /* 7 opciones aprox */
 }
+
+ /* Estilos para los inputs cuando hay dos gensets */
+        #genset_container.dual-genset .form-control {
+            padding: 0.35rem 0.5rem;
+        }
+
+        #genset_container.dual-genset label {
+            margin-bottom: 0.25rem;
+        }
+
+        #genset_container.dual-genset h6 {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Línea divisoria entre motor 1 y motor 2 */
+        #genset_container.dual-genset #genset_2_section {
+            border-left: 2px solid #dee2e6;
+            padding-left: 15px;
+        }
+
+        /* Estilos para los inputs cuando hay dos combustibles */
+        #combustible_container.dual-genset .form-control {
+            padding: 0.35rem 0.5rem;
+        }
+
+        #combustible_container.dual-genset label {
+            margin-bottom: 0.25rem;
+        }
+
+        #combustible_container.dual-genset h6 {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Línea divisoria entre combustible 1 y combustible 2 */
+        #combustible_container.dual-genset #combustible_2_section {
+            border-left: 2px solid #dee2e6;
+            padding-left: 15px;
+        }.info-adicional-btn {
+        appearance: none;
+        background-color: #fafbfc;
+        border: 1px solid rgba(27, 31, 35, 0.15);
+        border-radius: 6px;
+        box-shadow:
+            rgba(27, 31, 35, 0.04) 0 1px 0,
+            rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+        box-sizing: border-box;
+        color: #24292e;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 16px;
+        padding: 3px 8px;
+        min-width: 100px;
+        position: relative;
+        transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+        white-space: nowrap;
+        word-wrap: break-word;
+    }
+    .info-adicional-btn i {
+        font-size: 12px;
+    }
+    .info-adicional-btn:hover {
+        background-color: #f3f4f6;
+        text-decoration: none;
+        transition-duration: 0.1s;
+    }
+    .info-adicional-btn:disabled {
+        background-color: #fafbfc;
+        border-color: rgba(27, 31, 35, 0.15);
+        color: #959da5;
+        cursor: default;
+    }
+    .info-adicional-btn:active {
+        background-color: #edeff2;
+        box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+        transition: none 0s;
+    }
+    .info-adicional-btn:focus {
+        outline: 1px transparent;
+    }
+    .info-adicional-btn:before {
+        display: none;
+    }
+    .info-adicional-btn:-webkit-details-marker {
+        display: none;
+    }
