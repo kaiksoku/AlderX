@@ -7,10 +7,6 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
-
-    <STYLE>
-        
-    </STYLE>
 </head>
 
 <div class="container-fluid">
@@ -342,15 +338,90 @@
                             </div>
                         </div>
                     </div>
+<div class="container mt-3">
+    <div class="row">
+
+        <!-- ================= CHASSIS ================= -->
+        <div class="col-md-6">
+            <div class="form-section">
+            <h6>Revisión Chassis</h6>
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>Sistema</th>
+                        <th class="text-success">Bueno</th>
+                        <th class="text-danger">Malo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $chassisItems = ['Suspension','Guardafangos','Patas','Luces','Seguridad','Estructura General'];
+                    @endphp
+
+                    @foreach($chassisItems as $item)
+                    <tr>
+                        <td>{{ $item }}</td>
+                        <td>
+                            <input type="radio" name="mov_ch_{{ strtolower(str_replace(' ', '_', $item)) }}" value="bueno" required>
+                        </td>
+                        <td>
+                            <input type="radio" name="mov_ch_{{ strtolower(str_replace(' ', '_', $item)) }}" value="malo">
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+        <!-- ================= GENSET ================= -->
+        <div class="col-md-6">
+             <div class="form-section">
+            <h6>Revisión Genset</h6>
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>Sistema</th>
+                        <th class="text-success">Bueno</th>
+                        <th class="text-danger">Malo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $gensetItems = ['Puertas','Tapon','Argolla','Blindajes','Estructura General'];
+                    @endphp
+
+                    @foreach($gensetItems as $item)
+                    <tr>
+                        <td>{{ $item }}</td>
+                        <td>
+                            <input type="radio" name="mov_gs_{{ strtolower(str_replace(' ', '_', $item)) }}" value="bueno" required>
+                        </td>
+                        <td>
+                            <input type="radio" name="mov_gs_{{ strtolower(str_replace(' ', '_', $item)) }}" value="malo">
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
                 </div>
             </div>
+
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
-
+<!-- Modal Inspecciones extras -->
                 </div>
                 <div class="col-md-1">
                 </div>
@@ -574,6 +645,8 @@ document.addEventListener('DOMContentLoaded', function () {
         inputHora.value = valor;
     });
 });
+
+
 
                     </script>
 

@@ -197,4 +197,36 @@ textarea.form-control {
     }
     .info-adicional-btn:-webkit-details-marker {
         display: none;
-    }
+    }/* ===== TABLAS ULTRA COMPACTAS (CHASSIS / GENSET) ===== */
+.table {
+    margin-bottom: 5px !important;
+}
+
+.table th,
+.table td {
+    padding: 2px 4px !important;
+    font-size: 10px !important;
+    line-height: 2 !important;
+}
+
+.table th {
+    font-weight: 700;
+}
+
+/* Radios más pequeños */
+.table input[type="radio"] {
+    transform: scale(0.8);
+    margin: 0;
+}
+
+/* Columna de título más pegada */
+.table td:first-child {
+    text-align: left;
+    padding-left: 4px !important;
+}
+
+/* Centrado perfecto */
+.table td,
+.table th {
+    vertical-align: middle !important;
+}
