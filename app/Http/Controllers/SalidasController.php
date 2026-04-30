@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Chassis;
 use App\Models\Genset;
+use App\Models\User;
+
 
 class SalidasController extends Controller
 {
@@ -16,7 +18,8 @@ class SalidasController extends Controller
     public function show()
     {
         $chassis = Chassis::orderBy('chass_numero')->pluck('chass_numero');
-        return view('operaciones.salidas.salidascreate', compact('chassis'));
+        $users = User::role('condicionista')->orderBy('name')->pluck('name', 'id');
+        return view('operaciones.salidas.salidascreate', compact('chassis', 'users'));
     }
 
 // Valida en el formulario de salida que el CHASSIS existe antes de dejar pasar --------------------------    

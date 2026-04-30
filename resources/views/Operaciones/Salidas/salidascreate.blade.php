@@ -9,6 +9,13 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
 </head>
 
+<style>
+    /* Solo cambia el color del radio de Bueno a verde */
+    input[type="radio"][value="bueno"] {
+        accent-color: #28a745;
+    }
+</style>
+
 <div class="container-fluid">
 <div class="card card-outline card-success">
 
@@ -160,7 +167,13 @@
                     <br>
                     <div class="form-section">
                         <h6>Interchange</h6>
-                        <label>Condicionista</label><input class="form-control" name="mov_condicionista">
+                        <label>Condicionista</label>
+                        <select class="form-control" name="mov_condicionista" required>
+                            <option value="">Seleccione un condicionista</option>
+                            @foreach($users as $id => $name)
+                                <option value="{{ $id }}">{{ $name }}</option>
+                            @endforeach
+                        </select>
                         <label>Digitador</label><input class="form-control" name="mov_digitador" value="{{ auth()->user()->name ?? '' }}" readonly>
                         <label>Movimiento</label><input value="Salida" class="form-control" name="mov_movimiento" readonly>
                         <div class="d-flex justify-content-center mt-3">
@@ -362,7 +375,7 @@
                     <tr>
                         <td>{{ $item }}</td>
                         <td>
-                            <input type="radio" name="mov_ch_{{ strtolower(str_replace(' ', '_', $item)) }}" value="bueno" required>
+                            <input type="radio" name="mov_ch_{{ strtolower(str_replace(' ', '_', $item)) }}" value="bueno" required style="accent-color:#28a745;">
                         </td>
                         <td>
                             <input type="radio" name="mov_ch_{{ strtolower(str_replace(' ', '_', $item)) }}" value="malo">
@@ -395,7 +408,7 @@
                     <tr>
                         <td>{{ $item }}</td>
                         <td>
-                            <input type="radio" name="mov_gs_{{ strtolower(str_replace(' ', '_', $item)) }}" value="bueno" required>
+                            <input type="radio" name="mov_gs_{{ strtolower(str_replace(' ', '_', $item)) }}" value="bueno" required style="accent-color:#28a745;">
                         </td>
                         <td>
                             <input type="radio" name="mov_gs_{{ strtolower(str_replace(' ', '_', $item)) }}" value="malo">

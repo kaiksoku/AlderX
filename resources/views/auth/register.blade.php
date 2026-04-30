@@ -2,70 +2,113 @@
 
 @section('content')
 <head>
-<style>
-.container{
-    width:950px;
-    margin-left: 100px;
-}
-</style> 
-
-<link rel="stylesheet" href="{{ asset('archivos/fieldset.css') }}">
+    <link rel="stylesheet" href="{{ asset('archivos/despacho/formdespacho.css') }}">
+    <link rel="stylesheet" href="{{ asset('archivos/fieldset.css') }}">
+    <style>
+        .container {
+            max-width: 96%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .card {
+            border-radius: 4px;
+            box-shadow: 0 0 0 1px #ccc;
+        }
+        .card-header {
+            padding: 6px;
+            background: #e9ecef;
+        }
+        .card-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin: 0;
+        }
+        label {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 2px;
+            color: #333;
+        }
+        .form-control, .form-select {
+            height: 24px !important;
+            padding: 0 6px !important;
+            font-size: 12px !important;
+            line-height: 1.2 !important;
+            border-radius: 3px !important;
+        }
+        .card-footer .btn {
+            font-size: 14px;
+            padding: 6px 24px;
+            border-radius: 4px;
+        }
+        .row > [class*="col-"] {
+            margin-bottom: 3px;
+        }
+        .custom-legend {
+            font-size: 11px;
+            font-weight: 700;
+            color: #1f7734ff;
+        }
+        .custom-fieldset {
+            border: 1px solid #bbb;
+            border-radius: 4px;
+            padding: 8px;
+        }
+        
+    
+        .btn-success {
+            background-color: #1f7734ff;
+            border-color: #1f7734ff;
+        }
+    </style>
 </head>
 
-<div class="container">
-    <div class="card card-outline card-success">
-        <div class="card-header">
-            <h3 class="card-title">Formulario de Registro</h3>
+<div class="container-fluid">
+    <div class="card card-outline card-primary">
+
+        {{-- HEADER --}}
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h4 class="card-title mb-0">Formulario de Registro</h4>
             <div class="card-tools">
-                <a href="{{ route('usuarios.index') }}" class="btn btn-outline-success">
+                <a href="{{ route('usuarios.index') }}" class="btn btn-outline-primary">
                     Volver al Listado <i class="fas fa-arrow-circle-left ms-1"></i>
                 </a>
             </div>
         </div>
 <div class="card-body">
-        <form method="POST" action="{{ route('register.guardar') }}" class="p-3">
+    <form method="POST" action="{{ route('register.guardar') }}">
             @csrf
-            <div class="mb-3 row">
-                <label for="name" class="col-lg-4 col-form-label">Nombre de Usuario</label>
-                <div class="col-lg-8">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="name">Nombre de Usuario</label>
                     <input id="name" type="text" class="form-control" name="name" required>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="email" class="col-lg-4 col-form-label">Correo Electrónico</label>
-                <div class="col-lg-8">
+                <div class="col-md-6">
+                    <label for="email">Correo Electrónico</label>
                     <input id="email" type="email" class="form-control" name="email" required>
                 </div>
             </div>
-        
-            <div class="mb-3 row">
-                <label for="password" class="col-lg-4 col-form-label">Contraseña</label>
-                <div class="col-lg-8">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="password">Contraseña</label>
                     <input id="password" type="password" class="form-control" name="password" required>
                 </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="password-confirm" class="col-lg-4 col-form-label">Confirmar Contraseña</label>
-                <div class="col-lg-8">
+                <div class="col-md-6">
+                    <label for="password-confirm">Confirmar Contraseña</label>
                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required 
                         oninput="this.setCustomValidity(this.value !== document.getElementById('password').value ? 'Las contraseñas no coinciden' : '')">
                     <div class="invalid-feedback">
                         Las contraseñas no coinciden.
                     </div>
+                </div>
             </div>
-</div>
-<br>
-        <br>
+            <br>
 
-        <fieldset class="border p-2 col-sm-12 col-lg-12 custom-fieldset">
-    <legend class="w-auto custom-legend">Asignaciones</legend>
-    <br>
-    <div class="row">
-        <!-- Rol -->
-        <div class="col-lg-6">
-            <div class="row mb-3">
-                <label for="role" class="col-lg-4 col-form-label text-end">Rol</label>
-                <div class="col-lg-8">
+        <fieldset class="custom-fieldset">
+            <legend class="w-auto custom-legend">Asignaciones</legend>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="role">Rol</label>
                     <select id="role" class="form-control" name="role_id" required>
                         <option value="" disabled selected>Selecciona un rol</option>
                         @foreach ($roles as $role)
@@ -73,14 +116,8 @@
                         @endforeach
                     </select>
                 </div>
-            </div>
-        </div>
-
-        <!-- Departamento -->
-        <div class="col-lg-6">
-            <div class="row mb-3">
-                <label for="departamento" class="col-lg-4 col-form-label text-end">Departamento</label>
-                <div class="col-lg-8">
+                <div class="col-md-6">
+                    <label for="departamento">Departamento</label>
                     <select id="departamento" class="form-control" name="departamento" required>
                         <option value="" disabled selected>Asignar departamento</option>
                         @foreach ($departamentos as $departamento)
@@ -89,18 +126,12 @@
                     </select>
                 </div>
             </div>
-        </div>
-    </div>
-</fieldset>
+        </fieldset>
 
 </div>
 
-<div class="card-footer">
-            <div class="row d-flex justify-content-center">
-                    <div class="col-lg-4 text-center">
-                        <button type="submit" class="btn btn-success">Guardar</button>
-                    </div>
-            </div>
+<div class="card-footer text-center">
+    <button type="submit" class="btn btn-primary">Guardar</button>
 </div>
         </form>
     </div>
