@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Genset;
 
-class gensetSeeder extends Seeder
+class GensetSeeder extends Seeder
 {
     public function run()
     {
