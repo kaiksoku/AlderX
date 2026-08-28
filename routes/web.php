@@ -10,12 +10,13 @@ use App\Http\Controllers\Admin\UsuariosController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\RestaurantesController;
 use App\Http\Controllers\RolesController;
-use App\Http\Controllers\DepartamentosController;
+use App\Http\Controllers\ConsultasController;
 use App\Http\Controllers\EmpleadosController;
-use App\Http\Controllers\SolicitudesController;
+use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\ChassisController;
 use App\Http\Controllers\SalidasController;
 use App\Http\Controllers\GensetController;
+use App\Http\Controllers\DepartamentosController;
 
 // Principal---------------------------------------------------------------------------------------------------------------------------------
 Route::get('/', function () { return view('welcome'); })->name('welcome');  // Asigna el nombre 'welcome' a la ruta
@@ -69,12 +70,9 @@ Route::get('ventas', [VentasController::class, 'show'])->name('ventas');
 Route::get('ventas/create', [VentasController::class, 'create'])->name('ventas.create');
 Route::get('ventas/edit', [VentasController::class, 'edit'])->name('ventas.edit');
 
-//Modulo Solicitudes
-Route::get('solicitudes', [SolicitudesController::class, 'show'])->name('solicitudes');
-Route::get('solicitudes/create', [SolicitudesController::class, 'create'])->name('solicitudes.create');
-Route::post('solicitudes/guardar', [SolicitudesController::class, 'store'])->name('solicitudes.guardar');
-Route::get('/solicitudes/detalle/{id}', [SolicitudesController::class, 'detalle'])->name('solicitudes.detalle');
-Route::get('/solicitudes/eliminar/{id}', [SolicitudesController::class, 'destroy'])->name('solicitudes.eliminar');
+//Modulo Historial de Registros
+Route::get('historial', [HistorialController::class, 'index'])->name('historial');
+Route::get('consultas', [ConsultasController::class, 'index'])->name('consultas');
 
 // Módulo productos 
 Route::get('producto', [ProductoController::class, 'show'])->name('producto');

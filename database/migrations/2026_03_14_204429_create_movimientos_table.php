@@ -25,6 +25,7 @@ return new class extends Migration
         $table->time('mov_hora');
         $table->string('mov_cabezal');
         $table->string('mov_placacabezal');
+        $table->bigInteger('mov_kilometraje')->nullable();
 
         // Contenedor
         $table->string('mov_contenedor')->nullable();

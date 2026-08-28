@@ -33,7 +33,7 @@
             <div class="form-section">
                 <h6>Datos Generales</h6>
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-3 text-left">
                         <label>Recinto</label>
                         <input
                             type="text"
@@ -43,15 +43,15 @@
                             readonly
                         >
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3 text-left">
                         <label>Boleta / EIR</label>
                         <input type="number" class="form-control" name="mov_boleta" required>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3 text-left">
                         <label>Fecha</label>
                         <input type="date" class="form-control" name="mov_fecha" value="{{ now()->format('Y-m-d') }}">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3 text-left">
                         <label>Hora</label>
                         <input 
                         type="text" 
@@ -63,7 +63,10 @@
                         required
                     >
                     </div>
-                    <div class="col-md-2">
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-md-4">
                         <label>Cabezal</label>
                         <input class="form-control"
                                 name="mov_cabezal"
@@ -72,7 +75,7 @@
                                 title="Ingrese solo números o la palabra AGREGADO"
                                 style="text-transform: uppercase;">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <label>Placa Cabezal</label>
                         <input 
                             id="placa_cabezal"
@@ -84,7 +87,17 @@
                             style="text-transform: uppercase;"
                             required
                         >
-
+                    </div>
+                    <div class="col-md-4">
+                        <label>Kilometraje</label>
+                        <input
+                            type="number"
+                            class="form-control"
+                            name="mov_kilometraje"
+                            min="0"
+                            step="1"
+                            placeholder="0"
+                        >
                     </div>
                 </div>
             </div>
@@ -157,7 +170,7 @@
                                 pattern="[0-9]*"
                                 autocomplete="off"
                                 required>
-                            <input type="text" class="form-control" name="mov_chassis" id="mov_chassis_id">
+                            <input type="text" class="form-control" name="mov_chassis" id="mov_chassis_id" hidden>
                             
                         <label>Placa Chassis</label><input type="text" id="placa" name="mov_chass_placa" class="form-control" readonly>
                         <label>PV Chassis</label><input class="form-control" name="mov_pv_chassis">
@@ -465,7 +478,7 @@
                                 inputmode="numeric"
                                 pattern="[0-9]*"
                                 autocomplete="off">
-                            <input type="text" class="form-control" name="gen_numero_1" id="gen_id_1">
+                            <input type="text" class="form-control" name="gen_numero_1" id="gen_id_1" hidden>
                             <div class="row">
                                 <div class="col-6">
                                     <label>PV Genset</label>

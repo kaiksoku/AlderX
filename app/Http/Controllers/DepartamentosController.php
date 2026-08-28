@@ -19,11 +19,13 @@ class DepartamentosController extends Controller
     {
         $search = $request->input('search');
 
-        $departamentos = Departamentos::when($search, function ($query, $search) {
-             return $query->where('dep_nombre', 'like', '%' . $search . '%');
-    })
-    ->orderBy('dep_id')
-    ->paginate(10);
+        $departamentos = Departamentos::withCount('usuarios')
+            ->when($search, function ($query, $search) {
+                return $query->where('dep_nombre', 'like', '%' . $search . '%');
+            })
+            ->orderBy('dep_id')
+            ->paginate(10)
+            ->withQueryString();
 
 
         return view('admin.users.departamentos.departamentosview', compact('departamentos', 'search'));

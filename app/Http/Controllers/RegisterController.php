@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use App\Models\Departamentos;
+use App\Models\Recintos;
 
 class RegisterController extends Controller
 {
@@ -19,7 +20,8 @@ class RegisterController extends Controller
     {
         $roles = Role::where('name', '!=', 'empleado')->get();
         $departamentos = Departamentos::all();
-        return view('auth.register', compact('roles', 'departamentos'));
+        $recintos = Recintos::all();
+        return view('auth.register', compact('roles', 'departamentos', 'recintos'));
     }
 
     public function register(Request $request)
@@ -35,6 +37,7 @@ class RegisterController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'departamento' => $request->departamento,
+            'recinto' => $request->recinto ?? null,
         ]);
 
         $user->roles()->attach($request->role_id); // Asigna el rol seleccionado

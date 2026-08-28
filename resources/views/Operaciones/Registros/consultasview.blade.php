@@ -50,12 +50,7 @@
             <div class="card-header">
 
                 <div class="d-flex align-items-center w-100">
-                    <h3 class="card-title mb-0">Listado de Departamentos</h3>
-                    <div class="ml-auto d-flex align-items-center">
-                        <a href="{{ route('departamentos.create') }}" class="btn btn-success btn-sm ml-2">
-                            Crear nuevo departamento <i class="fa fa-fw fa-plus-circle pl-1"></i>
-                        </a>
-                    </div>
+                    <h3 class="card-title mb-0">Consulta de Equipos</h3>
 
                 </div>
 
@@ -68,7 +63,7 @@
                     <div class="input-group-wrapper">
                     <form action="{{ route('departamentos') }}" method="GET" class="input-group" id="search-form">
                             <div class="form-outline">
-                            <input type="search" id="form1" name="search" class="form-control" value="{{ $search ?? request('search') }}" placeholder="Buscar departamento" />
+                            <input type="search" id="form1" name="search" class="form-control" value="{{ request('search') }}" placeholder="Buscar equipo" />
                             </div>
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-search"></i>
@@ -121,34 +116,109 @@
                     <table class="table table-striped tabla-ajustada" cellspacing="0">
                         <thead class="table-dark">
                             <tr>
-                                <th>ID</th>
-                                <th>Departamento</th>
-                                <th>Empleados</th>
+                <th>Boleta</th>
+                <th>Recinto</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Carga</th>
+                <th>Cabezal</th>
+                <th>Placa Cabezal</th>
+                <th>Piloto</th>
+                <th>Contenedor</th>
+                <th>Sello Plástico</th>
+                <th>Sello Botella</th>
+                <th>Setpoint</th>
+                <th>Damper</th>
+                <th>Naviera</th>
+                <th>Chassis</th>
+                <th>Genset</th>
+                <th>Cliente</th>
+                <th>Movimiento</th>
+                <th>Condicionista</th>
+                <th>Digitador</th>
+                <th>Observaciones</th>
+            </tr>
                             </tr>
                         </thead>
 
-                        <tbody>
-                            @forelse($departamentos as $departamento)
-                                <tr>
-                                    <td>{{ $departamento->dep_id }}</td>
-                                    <td>{{ $departamento->dep_nombre }}</td>
-                                    <td>{{ $departamento->usuarios_count }}</td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="3" class="text-center">No hay departamentos registrados.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
+                         <tbody>
+                    {{-- FILA DE EJEMPLO --}}
+                    <tr>
+                        <td>54871</td>
+                        <td>Puerto Barrios</td>
+                        <td>13-12-25</td>
+                        <td>21:59:36</td>
+                        <td>Banano</td>
+                        <td>402</td>
+                        <td>400DYZ</td>
+                        <td>Directos</td>
+                        <td>Uber Samayoa</td>
+                        <td>DFIU3334127</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                    </tr>
+
+                    <tr>
+                        <td>64871</td>
+                        <td>Puerto Barrios</td>
+                        <td>13-12-25</td>
+                        <td>21:59:36</td>
+                        <td>Banano</td>
+                        <td>402</td>
+                        <td>400DYZ</td>
+                        <td>Directos</td>
+                        <td>Uber Samayoa</td>
+                        <td>DFIU3334127</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                    </tr>
+                </tbody>
                     </table>
 
                     {{-- PAGINACIÓN --}}
-                    <div class="d-flex justify-content-center mt-4">
-                        {{ $departamentos->links() }}
-                    </div>
+                    
 
                 </div>
             </div>
+<div class="d-flex justify-content-center mt-4">
+                        <nav>
+                            <ul class="pagination">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#">Anterior</a>
+                                </li>
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">1</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">3</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Siguiente</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
             {{-- JS --}}
             <script src="{{ asset('archivos/tables/table.js') }}"></script>
 

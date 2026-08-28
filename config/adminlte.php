@@ -311,14 +311,14 @@ return [
             'can' => 'manage-blog',
         ],
         [
-            'text' => 'Registros',
-            'url' => 'solicitudes',
+            'text' => 'Historial',
+            'url' => 'historial',
             'icon' => 'fas fa-folder-open',
             'label_color' => 'success',
         ],
         [
             'text' => 'Consultas',
-            'url' => 'departamentos',
+            'url' => 'consultas',
             'icon' => 'fas fa-search-plus',
         ],
          [

@@ -107,7 +107,7 @@
         <fieldset class="custom-fieldset">
             <legend class="w-auto custom-legend">Asignaciones</legend>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="role">Rol</label>
                     <select id="role" class="form-control" name="role_id" required>
                         <option value="" disabled selected>Selecciona un rol</option>
@@ -116,12 +116,21 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="departamento">Departamento</label>
                     <select id="departamento" class="form-control" name="departamento" required>
                         <option value="" disabled selected>Asignar departamento</option>
                         @foreach ($departamentos as $departamento)
                             <option value="{{ $departamento->dep_id }}">{{ $departamento->dep_nombre }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="recinto">Recinto</label>
+                    <select id="recinto" class="form-control" name="recinto" required>
+                        <option value="" disabled selected>Seleccionar recinto</option>
+                        @foreach ($recintos as $recinto)
+                            <option value="{{ $recinto->reci_id }}">{{ $recinto->reci_nombre }}</option>
                         @endforeach
                     </select>
                 </div>
