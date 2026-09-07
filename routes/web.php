@@ -27,17 +27,17 @@ Auth::routes(['register' => false]);
 
 //Administrador------------------------------------------------------------------------------------------------------------------------------
 Route::get('usuarios/create', [RegisterController::class, 'create'])->middleware('auth')->middleware('can:Crear Usuarios')->name('usuarios.create');
-Route::resource('usuarios', UsuariosController::class)->only(['index', 'edit', 'update', 'show'])->middleware('can:Ver Usuarios')->names('usuarios');
-Route::get('usuarios/eliminar/{id}', [UsuariosController::class, 'destroy'])->name('usuarios.destroy');
+Route::get('usuarios', [UsuariosController::class, 'index'])->middleware(['auth', 'can:Ver Usuarios'])->name('usuarios.index');
+Route::get('usuarios/{usuario}/edit', [UsuariosController::class, 'edit'])->middleware(['auth', 'can:Editar Usuarios'])->name('usuarios.edit');
+Route::put('usuarios/{usuario}', [UsuariosController::class, 'update'])->middleware(['auth', 'can:Editar Usuarios'])->name('usuarios.update');
+Route::get('usuarios/{usuario}', [UsuariosController::class, 'show'])->middleware(['auth', 'can:Ver Usuarios'])->name('usuarios.show');
+Route::get('usuarios/eliminar/{id}', [UsuariosController::class, 'destroy'])->middleware(['auth', 'can:Eliminar Usuarios'])->name('usuarios.destroy');
 Route::post('usuarios/guardar', [RegisterController::class, 'register'])->middleware('auth')->middleware('can:Crear Usuarios')->name('register.guardar');
 
-Route::get('roles', [RolesController::class, 'show'])->middleware('auth')->middleware('can:Ver Roles')->name('roles');
-Route::get('roles/create', [RolesController::class, 'create'])->name('roles.create');
-Route::post('roles/guardar', [RolesController::class, 'store'])->name('roles.guardar');
-Route::get('roles/eliminar/{id}', [RolesController::class, 'destroy'])->name('roles.eliminar');
-
-//Administrador------------------------------------------------------------------------------------------------------------------------------
-
+Route::get('roles', [RolesController::class, 'show'])->middleware(['auth', 'can:Ver Roles'])->name('roles');
+Route::get('roles/create', [RolesController::class, 'create'])->middleware(['auth', 'can:Crear Roles'])->name('roles.create');
+Route::post('roles/guardar', [RolesController::class, 'store'])->middleware(['auth', 'can:Crear Roles'])->name('roles.guardar');
+Route::get('roles/eliminar/{id}', [RolesController::class, 'destroy'])->middleware(['auth', 'can:Eliminar Roles'])->name('roles.eliminar');
 
 
 // Inicia Rutas generales---------------------------------------------------------------------------------------------------------------------
@@ -46,57 +46,41 @@ Route::get('roles/eliminar/{id}', [RolesController::class, 'destroy'])->name('ro
 // Módulo inicio de sesión
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
-Route::get('home', [HomeController::class, 'index'])->name('home');
+Route::get('home', [HomeController::class, 'index'])->middleware(['auth', 'can:Ver Dashboard'])->name('home');
 
 // Módulo Chassis 
-Route::get('chassis', [ChassisController::class, 'show'])->name('chassis');
-Route::get('chassis/create', [ChassisController::class, 'create'])->name('chassis.create');
-Route::post('chassis/guardar', [ChassisController::class, 'store'])->name('chassis.guardar');
-Route::get('/chassis/edit/{id}', [ChassisController::class, 'edit'])->name('chassis.edit');
-Route::post('/chassis/update', [ChassisController::class, 'update'])->name('chassis.update');
-Route::get('/chassis/destroy/{id}', [ChassisController::class, 'destroy'])->name('chassis.destroy');
+Route::get('chassis', [ChassisController::class, 'show'])->middleware(['auth', 'can:Ver Chassis'])->name('chassis');
+Route::get('chassis/create', [ChassisController::class, 'create'])->middleware(['auth', 'can:Crear Chassis'])->name('chassis.create');
+Route::post('chassis/guardar', [ChassisController::class, 'store'])->middleware(['auth', 'can:Crear Chassis'])->name('chassis.guardar');
+Route::get('/chassis/edit/{id}', [ChassisController::class, 'edit'])->middleware(['auth', 'can:Editar Chassis'])->name('chassis.edit');
+Route::post('/chassis/update', [ChassisController::class, 'update'])->middleware(['auth', 'can:Editar Chassis'])->name('chassis.update');
+Route::get('/chassis/destroy/{id}', [ChassisController::class, 'destroy'])->middleware(['auth', 'can:Eliminar Chassis'])->name('chassis.destroy');
 
 // Módulo Genset
-Route::get('genset', [GensetController::class, 'show'])->name('genset');
-
+Route::get('genset', [GensetController::class, 'show'])->middleware(['auth', 'can:Ver Genset'])->name('genset');
 
 // Módulo Salidas 
-Route::get('salidas', [SalidasController::class, 'show'])->name('salidas');
-Route::get('ajax/validar-chassis', [SalidasController::class, 'validarChassis'])->name('validarchassis');
-Route::get('ajax/validar-genset', [SalidasController::class, 'validarGenset'])->name('validargenset');
-
-// Módulo ventas 
-Route::get('ventas', [VentasController::class, 'show'])->name('ventas');
-Route::get('ventas/create', [VentasController::class, 'create'])->name('ventas.create');
-Route::get('ventas/edit', [VentasController::class, 'edit'])->name('ventas.edit');
+Route::get('salidas', [SalidasController::class, 'show'])->middleware(['auth', 'can:Ver Salidas'])->name('salidas');
+Route::get('ajax/validar-chassis', [SalidasController::class, 'validarChassis'])->middleware(['auth', 'can:Ver Salidas'])->name('validarchassis');
+Route::get('ajax/validar-genset', [SalidasController::class, 'validarGenset'])->middleware(['auth', 'can:Ver Salidas'])->name('validargenset');
 
 //Modulo Historial de Registros
-Route::get('historial', [HistorialController::class, 'index'])->name('historial');
-Route::get('consultas', [ConsultasController::class, 'index'])->name('consultas');
+Route::get('historial', [HistorialController::class, 'index'])->middleware(['auth', 'can:Ver Reportes'])->name('historial');
+Route::get('consultas', [ConsultasController::class, 'index'])->middleware(['auth', 'can:Ver Reportes'])->name('consultas');
 
-// Módulo productos 
-Route::get('producto', [ProductoController::class, 'show'])->name('producto');
-Route::get('producto/create', [ProductoController::class, 'create'])->name('producto.create');
-Route::post('producto/guardar', [ProductoController::class, 'store'])->name('producto.guardar');
-Route::get('producto/edit', [ProductoController::class, 'edit'])->name('producto.edit');
-Route::get('producto/eliminar/{id}', [ProductoController::class, 'destroy'])->name('producto.eliminar');
-
-// Módulo Restaurantes
-Route::get('restaurantes', [RestaurantesController::class, 'show'])->name('restaurantes');
-Route::get('restaurantes/crear', [CategoriaController::class, 'create'])->name('categoria.create');
-Route::post('restaurantes/guardar', [CategoriaController::class, 'store'])->name('categoria.guardar');
-Route::get('restaurantes/editar', [CategoriaController::class, 'edit'])->name('categoria.edit');
 
 // Módulo Departamentos
-Route::get('departamentos', [DepartamentosController::class, 'show'])->name('departamentos');
-Route::get('departamentos/create', [DepartamentosController::class, 'create'])->name('departamentos.create');
-Route::post('departamentos/guardar', [DepartamentosController::class, 'store'])->name('departamentos.guardar');
-Route::get('departamentos/eliminar/{id}', [DepartamentosController::class, 'destroy'])->name('departamentos.eliminar');
+Route::get('departamentos', [DepartamentosController::class, 'show'])->middleware(['auth', 'can:Ver Departamentos'])->name('departamentos');
+Route::get('departamentos/create', [DepartamentosController::class, 'create'])->middleware(['auth', 'can:Crear Departamentos'])->name('departamentos.create');
+Route::post('departamentos/guardar', [DepartamentosController::class, 'store'])->middleware(['auth', 'can:Crear Departamentos'])->name('departamentos.guardar');
+Route::get('departamentos/eliminar/{id}', [DepartamentosController::class, 'destroy'])->middleware(['auth', 'can:Eliminar Departamentos'])->name('departamentos.eliminar');
 
 // Módulo Empleados
-Route::get('empleados', [EmpleadosController::class, 'show'])->name('empleados');
-Route::get('empleados/create', [EmpleadosController::class, 'create'])->name('empleados.create');
-Route::post('empleados/store', [EmpleadosController::class, 'store'])->middleware('auth')->middleware('can:Crear Usuarios')->name('empleados.guardar');
+Route::get('empleados', [EmpleadosController::class, 'show'])->middleware(['auth', 'can:Ver Empleados'])->name('empleados');
+Route::get('empleados/create', [EmpleadosController::class, 'create'])->middleware(['auth', 'can:Crear Empleados'])->name('empleados.create');
+Route::get('empleados/edit/{id}', [EmpleadosController::class, 'edit'])->middleware(['auth', 'can:Editar Empleados'])->name('empleados.edit');
+Route::put('empleados/update/{id}', [EmpleadosController::class, 'update'])->middleware(['auth', 'can:Editar Empleados'])->name('empleados.update');
+Route::post('empleados/store', [EmpleadosController::class, 'store'])->middleware(['auth', 'can:Crear Empleados'])->name('empleados.guardar');
 
 
 

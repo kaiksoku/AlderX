@@ -68,5 +68,10 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'Editar Cobros'])->assignRole([$roleadmin]);
         Permission::create(['name' => 'Eliminar Cobros'])->assignRole([$roleadmin]);
 
+        Permission::create(['name' => 'Ver Cabezales'])->assignRole([$roleadmin]);
+        Permission::create(['name' => 'Crear Cabezales'])->assignRole([$roleadmin]);
+        Permission::create(['name' => 'Editar Cabezales'])->assignRole([$roleadmin]);
+        Permission::create(['name' => 'Eliminar Cabezales'])->assignRole([$roleadmin]);
+
     }
 }

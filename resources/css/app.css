@@ -1,1 +1,2 @@
-@import 'node_modules/font-awesome/css/font-awesome.css';
+/* Legacy Font Awesome 4 import removed to avoid conflicts with AdminLTE 4 / Font Awesome 6.
+   Use FA 6 classes such as fa-solid fa-users instead. */

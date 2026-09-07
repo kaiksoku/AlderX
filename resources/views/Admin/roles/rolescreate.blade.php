@@ -114,264 +114,67 @@
             <fieldset class="border p-2 col-sm-12 col-lg-12 custom-fieldset">
     <legend class="w-auto custom-legend">Asignación de Permisos</legend>
     <br>
+    @php
+        $modulos = [
+            'Reportes',
+            'Salidas',
+            'Entradas',
+            'Cobros',
+            'Usuarios',
+            'Empleados',
+            'Roles',
+            'Chassis',
+            'Genset',
+            'Cabezales',
+            'Dashboard',
+            'Departamentos',
+        ];
+    @endphp
 
-    <!-- Tabla para Permisos de Dashboard -->
-    
-    <table class="table table-striped table-hover" cellspacing="0">
-            <thead class="table-dark">
-                <tr>
-                    <th colspan="2">Permisos para Dashboard</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach ($permisos as $permiso)
-        @if (str_contains(strtolower($permiso->name), 'dashboard'))
-            <tr>
-                <td>
-                    <span id="label_{{ $permiso->id }}">{{ $permiso->name }}</span>
-                </td>
-                <td class="text-end">
-                    <label class="switch">
-                        <input 
-                            type="checkbox" 
-                            name="permisos[]" 
-                            id="permiso_{{ $permiso->id }}" 
-                            value="{{ $permiso->id }}" 
-                            onchange="toggleTextStyle('label_{{ $permiso->id }}')">
-                        <span class="slider"></span>
-                    </label>
-                </td>
-            </tr>
-        @endif
-    @endforeach
-            </tbody>
-        </table>
-
-<!-- Tabla para Permisos de Solicitudes -->
-    
-<table class="table table-striped table-hover" cellspacing="0">
-            <thead class="table-dark">
-                <tr>
-                    <th colspan="2">Permisos para Solicitudes</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach ($permisos as $permiso)
-        @if (str_contains(strtolower($permiso->name), 'solicitudes'))
-            <tr>
-                <td>
-                    <span id="label_{{ $permiso->id }}">{{ $permiso->name }}</span>
-                </td>
-                <td class="text-end">
-                    <label class="switch">
-                        <input 
-                            type="checkbox" 
-                            name="permisos[]" 
-                            id="permiso_{{ $permiso->id }}" 
-                            value="{{ $permiso->id }}" 
-                            onchange="toggleTextStyle('label_{{ $permiso->id }}')">
-                        <span class="slider"></span>
-                    </label>
-                </td>
-            </tr>
-        @endif
-    @endforeach
-            </tbody>
-        </table>
-
-    <!-- Tabla para Permisos de Restaurantes -->
-    <div class="table-responsive">
+    @foreach ($modulos as $modulo)
         <table class="table table-striped table-hover" cellspacing="0">
             <thead class="table-dark">
                 <tr>
-                    <th colspan="2">Permisos para Restaurantes</th>
+                    <th>Permisos para {{ $modulo }}</th>
+                    <th class="text-end">
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-light"
+                            onclick="toggleModulePermissions('{{ Str::slug($modulo) }}')">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </th>
                 </tr>
             </thead>
             <tbody>
-    @foreach ($permisos as $permiso)
-        @if (str_contains(strtolower($permiso->name), 'restaurante'))
-            <tr>
-                <td>
-                    <span id="label_{{ $permiso->id }}">{{ $permiso->name }}</span>
-                </td>
-                <td class="text-end">
-                    <label class="switch">
-                        <input 
-                            type="checkbox" 
-                            name="permisos[]" 
-                            id="permiso_{{ $permiso->id }}" 
-                            value="{{ $permiso->id }}" 
-                            onchange="toggleTextStyle('label_{{ $permiso->id }}')">
-                        <span class="slider"></span>
-                    </label>
-                </td>
-            </tr>
-        @endif
-    @endforeach
-</tbody>
-        </table>
-    </div>
-
-
-    <!-- Tabla para Permisos de Autorizaciones -->
-    
-<table class="table table-striped table-hover" cellspacing="0">
-            <thead class="table-dark">
-                <tr>
-                    <th colspan="2">Permisos Chassis</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach ($permisos as $permiso)
-        @if (str_contains(strtolower($permiso->name), 'chassis'))
-            <tr>
-                <td>
-                    <span id="label_{{ $permiso->id }}">{{ $permiso->name }}</span>
-                </td>
-                <td class="text-end">
-                    <label class="switch">
-                        <input 
-                            type="checkbox" 
-                            name="permisos[]" 
-                            id="permiso_{{ $permiso->id }}" 
-                            value="{{ $permiso->id }}" 
-                            onchange="toggleTextStyle('label_{{ $permiso->id }}')">
-                        <span class="slider"></span>
-                    </label>
-                </td>
-            </tr>
-        @endif
-    @endforeach
+                @foreach (['Ver', 'Crear', 'Editar', 'Eliminar'] as $accion)
+                    @php
+                        $nombrePermiso = $accion . ' ' . $modulo;
+                        $permiso = $permisos->firstWhere('name', $nombrePermiso);
+                    @endphp
+                    @if ($permiso)
+                        <tr>
+                            <td>
+                                <span id="label_{{ $permiso->id }}">{{ $permiso->name }}</span>
+                            </td>
+                            <td class="text-end">
+                                <label class="switch">
+                                    <input
+                                        type="checkbox"
+                                        name="permisos[]"
+                                        id="permiso_{{ $permiso->id }}"
+                                        value="{{ $permiso->id }}"
+                                        data-permiso-modulo="{{ Str::slug($modulo) }}"
+                                        onchange="toggleTextStyle('label_{{ $permiso->id }}')">
+                                    <span class="slider"></span>
+                                </label>
+                            </td>
+                        </tr>
+                    @endif
+                @endforeach
             </tbody>
         </table>
-
-         <!-- Tabla para Permisos de Empleados -->
-    
-<table class="table table-striped table-hover" cellspacing="0">
-            <thead class="table-dark">
-                <tr>
-                    <th colspan="2">Permisos para Empleados</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach ($permisos as $permiso)
-        @if (str_contains(strtolower($permiso->name), 'empleado'))
-            <tr>
-                <td>
-                    <span id="label_{{ $permiso->id }}">{{ $permiso->name }}</span>
-                </td>
-                <td class="text-end">
-                    <label class="switch">
-                        <input 
-                            type="checkbox" 
-                            name="permisos[]" 
-                            id="permiso_{{ $permiso->id }}" 
-                            value="{{ $permiso->id }}" 
-                            onchange="toggleTextStyle('label_{{ $permiso->id }}')">
-                        <span class="slider"></span>
-                    </label>
-                </td>
-            </tr>
-        @endif
     @endforeach
-            </tbody>
-        </table>
-
- <!-- Tabla para Permisos de Departamentos -->
-    
- <table class="table table-striped table-hover" cellspacing="0">
-            <thead class="table-dark">
-                <tr>
-                    <th colspan="2">Permisos para Departamentos</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach ($permisos as $permiso)
-        @if (str_contains(strtolower($permiso->name), 'departamento'))
-            <tr>
-                <td>
-                    <span id="label_{{ $permiso->id }}">{{ $permiso->name }}</span>
-                </td>
-                <td class="text-end">
-                    <label class="switch">
-                        <input 
-                            type="checkbox" 
-                            name="permisos[]" 
-                            id="permiso_{{ $permiso->id }}" 
-                            value="{{ $permiso->id }}" 
-                            onchange="toggleTextStyle('label_{{ $permiso->id }}')">
-                        <span class="slider"></span>
-                    </label>
-                </td>
-            </tr>
-        @endif
-    @endforeach
-            </tbody>
-        </table>
-
-    <!-- Tabla para Permisos de Usuarios -->
-    
-        <table class="table table-striped table-hover" cellspacing="0">
-            <thead class="table-dark">
-                <tr>
-                    <th colspan="2">Permisos para Usuarios</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach ($permisos as $permiso)
-        @if (str_contains(strtolower($permiso->name), 'usuario'))
-            <tr>
-                <td>
-                    <span id="label_{{ $permiso->id }}">{{ $permiso->name }}</span>
-                </td>
-                <td class="text-end">
-                    <label class="switch">
-                        <input 
-                            type="checkbox" 
-                            name="permisos[]" 
-                            id="permiso_{{ $permiso->id }}" 
-                            value="{{ $permiso->id }}" 
-                            onchange="toggleTextStyle('label_{{ $permiso->id }}')">
-                        <span class="slider"></span>
-                    </label>
-                </td>
-            </tr>
-        @endif
-    @endforeach
-            </tbody>
-        </table>
-
-        <!-- Tabla para Permisos de Roles -->
-    
-        <table class="table table-striped table-hover" cellspacing="0">
-            <thead class="table-dark">
-                <tr>
-                    <th colspan="2">Permisos para Roles</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach ($permisos as $permiso)
-        @if (str_contains(strtolower($permiso->name), 'roles'))
-            <tr>
-                <td>
-                    <span id="label_{{ $permiso->id }}">{{ $permiso->name }}</span>
-                </td>
-                <td class="text-end">
-                    <label class="switch">
-                        <input 
-                            type="checkbox" 
-                            name="permisos[]" 
-                            id="permiso_{{ $permiso->id }}" 
-                            value="{{ $permiso->id }}" 
-                            onchange="toggleTextStyle('label_{{ $permiso->id }}')">
-                        <span class="slider"></span>
-                    </label>
-                </td>
-            </tr>
-        @endif
-    @endforeach
-            </tbody>
-        </table>
 
 
 </fieldset>
@@ -391,5 +194,16 @@
     </div>
     <script src="{{ asset('archivos/tables/table.js') }}"></script>
     <script src="{{ asset('archivos/checkbox/checkbox.js') }}"></script>
+    <script>
+        function toggleModulePermissions(module) {
+            const checkboxes = document.querySelectorAll(`[data-permiso-modulo="${module}"]`);
+            const selectAll = !Array.from(checkboxes).every((checkbox) => checkbox.checked);
+
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = selectAll;
+                toggleTextStyle(`label_${checkbox.value}`);
+            });
+        }
+    </script>
 </div>
 @endsection

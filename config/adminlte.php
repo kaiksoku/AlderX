@@ -314,59 +314,81 @@ return [
             'text' => 'Historial',
             'url' => 'historial',
             'icon' => 'fas fa-folder-open',
+            'can' => 'Ver Reportes',
             'label_color' => 'success',
         ],
         [
             'text' => 'Consultas',
             'url' => 'consultas',
             'icon' => 'fas fa-search-plus',
+            'can' => 'Ver Reportes',
         ],
-         [
+        [
+            'header' => 'RECURSO HUMANO',
+            'can' => ['Ver Usuarios', 'Ver Empleados', 'Ver Roles'],
+        ],
+        [
             'text' => 'Usuarios',
             'url' => 'usuarios',
-            'icon' => 'fas fa-user-circle',
+            'icon' => 'fas fa-user-edit',
+            'can' => 'Ver Usuarios',
             'active' => ['usuarios', 'usuarios/*'],
+        ],
+        [
+            'text' => 'Empleados',
+            'url' => 'empleados',
+            'icon' => 'fas fa-user-alt',
+            'can' => 'Ver Empleados',
+            'active' => ['empleados', 'empleados/*'],
         ],
         [
             'text' => 'Roles',
             'url' => 'roles',
             'icon' => 'fas fa-user-tag',
+            'can' => 'Ver Roles',
         ],
         ['header' => 'OPERACIONES'],
         [
             'text' => 'Entradas',
             'url' => 'admin/settings',
             'icon' => 'fas fa-download',
+            'can' => 'Ver Entradas',
         ],
         [
             'text' => 'Salidas',
             'url' => 'salidas',
             'icon' => 'fas fa-upload',
+            'can' => 'Ver Salidas',
         ],
         [
-            'text' => 'Reporte de Daños',
+            'text' => 'Cobros',
             'url' => '',
             'icon' => 'fas fa-receipt',
+            'can' => 'Ver Cobros',
         ],
          ['header' => 'INVENTARIO'],
         [
             'text' => 'Equipos',
             'icon' => 'fas fa-fw fa-share',
+            'can' => ['Ver Chassis', 'Ver Genset', 'Ver Cabezales'],
             'submenu' => [
                 [
                     'text' => 'Chassis',
                     'url' => 'chassis',
                     'icon' => 'fas fa-truck-loading',
+                    'can' => 'Ver Chassis',
                 ],
                 
                 [
                     'text' => 'Genset',
                     'url' => 'genset',
                     'icon' => 'fas fa-train',
+                    'can' => 'Ver Genset',
                 ],
                 [
                     'text' => 'Cabezales',
                     'url' => '#',
+                    'can' => 'Ver Cabezales',
                 ],
                 [
                     'text' => 'Contenedores',

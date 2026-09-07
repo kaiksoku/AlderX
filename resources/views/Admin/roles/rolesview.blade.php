@@ -51,14 +51,14 @@
 @endif
 
 <div class="container-fluid">
-    <div class="card card-outline card-success">
+    <div class="card card-outline card-primary">
 
         {{-- HEADER --}}
         <div class="card-header">
             <div class="d-flex align-items-center justify-content-between w-100">
                 <h3 class="card-title mb-0">Listado de Roles</h3>
 
-                <a href="{{ route('roles.create') }}" class="btn btn-success btn-sm">
+                <a href="{{ route('roles.create') }}" class="btn btn-primary btn-sm">
                     <i class="fas fa-plus"></i> &nbsp REGISTRAR ROL
                 </a>
             </div>

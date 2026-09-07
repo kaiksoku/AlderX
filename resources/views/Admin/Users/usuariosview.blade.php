@@ -101,25 +101,25 @@
                 </style>
 
                 {{-- TABLA --}}
-                <table class="table table-striped tabla-ajustada" cellspacing="0">
+                <form method="GET" action="{{ route('usuarios.index') }}">
+                    <table class="table table-striped tabla-ajustada" cellspacing="0">
 
-                    {{-- HEADER --}}
-                    <thead class="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>Rol</th>
-                            <th>Departamento</th>
-                            <th>Recinto</th>
-                            <th>Opciones</th>
-                        </tr>
-                    </thead>
+                        {{-- HEADER --}}
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Rol</th>
+                                <th>Departamento</th>
+                                <th>Recinto</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
+                        <tbody>
 
-                    {{-- FILTROS --}}
-                    <form method="GET" action="{{ route('usuarios.index') }}">
+                        {{-- FILTROS --}}
                         <tr class="filtros">
                             <th><input name="id" class="form-control filtro" value="{{ request('id') }}"></th>
                             <th><input name="name" class="form-control filtro" value="{{ request('name') }}"></th>
@@ -128,17 +128,16 @@
                             <th><input name="departamento" class="form-control filtro" value="{{ request('departamento') }}"></th>
                             <th><input name="recinto" class="form-control filtro" value="{{ request('recinto') }}"></th>
                             <th>
-                                <button type="submit" style="display:none;"></button>
+                                <button type="submit" class="btn btn-sm btn-primary" style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;" aria-label="Buscar">Filtrar</button>
                             </th>
                         </tr>
-                    </form>
 
-                    {{-- DATOS --}}
-                    @foreach($usuarios as $usuario)
-                        <tr>
-                            <td>{{ $usuario->id }}</td>
-                            <td>{{ $usuario->name }}</td>
-                            <td>{{ $usuario->email }}</td>
+                        {{-- DATOS --}}
+                        @foreach($usuarios as $usuario)
+                            <tr>
+                                <td>{{ $usuario->id }}</td>
+                                <td>{{ $usuario->name }}</td>
+                                <td>{{ $usuario->email }}</td>
 
                             <td>
                                 @if($usuario->roles->isEmpty())
@@ -177,10 +176,11 @@
                                 </a>
                             </td>
                         </tr>
-                    @endforeach
+                        @endforeach
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </form>
 
                 {{-- PAGINACIÓN --}}
                 <div class="d-flex justify-content-center mt-4">

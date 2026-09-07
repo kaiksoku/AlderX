@@ -18,7 +18,6 @@
     "dependencies": {
         "@popperjs/core": "^2.11.8",
         "admin-lte": "^4.0.0-beta2",
-        "bootstrap": "^5.3.3",
-        "font-awesome": "^4.7.0"
+        "bootstrap": "^5.3.3"
     }
 }
