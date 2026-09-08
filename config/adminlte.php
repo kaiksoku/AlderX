@@ -352,13 +352,13 @@ return [
             'text' => 'Entradas',
             'url' => 'admin/settings',
             'icon' => 'fas fa-download',
-            'can' => 'Ver Entradas',
+            'can' => 'Crear Entradas',
         ],
         [
             'text' => 'Salidas',
             'url' => 'salidas',
             'icon' => 'fas fa-upload',
-            'can' => 'Ver Salidas',
+            'can' => 'Crear Salidas',
         ],
         [
             'text' => 'Cobros',

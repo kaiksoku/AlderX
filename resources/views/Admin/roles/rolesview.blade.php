@@ -127,7 +127,7 @@
                                     <i class="far fa-trash-alt text-danger"></i>
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('roles.editar', ['role' => $role->id]) }}"
                                    data-toggle="tooltip"
                                    title="Editar"
                                    style="margin: 0 8px;">

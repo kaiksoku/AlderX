@@ -28,6 +28,14 @@ class RolesController extends Controller
         return view('admin.roles.rolescreate', compact('permisos'));
     }
 
+    public function edit(Role $role)
+    {
+        $permisos = Permission::all();
+        $role->load('permissions');
+
+        return view('admin.roles.rolesedit', compact('role', 'permisos'));
+    }
+
     public function store(Request $request)
 {
     $request->validate([
@@ -47,6 +55,25 @@ class RolesController extends Controller
         return redirect()->route('roles')->with('mensaje', 'El Rol se creó con éxito');
     } catch (\Exception $e) {
         return redirect()->route('roles.create')->with('mensaje de error', 'Hubo un problema al crear el rol');
+    }
+}
+
+public function update(Request $request, Role $role)
+{
+    $request->validate([
+        'name' => 'required|unique:roles,name,' . $role->id,
+    ], [
+        'name.required' => 'El nombre del rol es obligatorio.',
+        'name.unique' => 'Ya existe un rol con ese nombre. Por favor, elija otro.',
+    ]);
+
+    try {
+        $role->update(['name' => $request->name]);
+        $role->permissions()->sync($request->input('permisos', []));
+
+        return redirect()->route('roles')->with('mensaje', 'El Rol se actualizó con éxito');
+    } catch (\Exception $e) {
+        return redirect()->route('roles.edit', $role)->with('mensaje de error', 'Hubo un problema al actualizar el rol');
     }
 }
 

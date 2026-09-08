@@ -91,7 +91,7 @@
 <div class="container">
     <div class="card card-outline card-primary">
         <div class="card-header">
-            <h3 class="card-title">Registrar una nuevo Rol<small></small></h3>
+            <h3 class="card-title">Registrar un nuevo Rol<small></small></h3>
             <div class="card-tools">
                 <a href="#" class="btn btn-outline-primary">
                     Volver al Listado <i class="fas fa-arrow-circle-left pl-1"></i>
@@ -186,7 +186,7 @@
                 <div class="row">
                     <div class="col-lg-4"></div>
                     <div class="col-lg-4 text-center">
-                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
             </div>

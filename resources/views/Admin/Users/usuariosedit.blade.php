@@ -3,20 +3,13 @@
 @section('content')
 <head>
 <style>
-    .container-fluid {
-        max-width: 96%;
-        margin-left: auto;
-        margin-right: auto;
+    .card-body {
+        overflow-x: auto;
     }
 
-    .card {
-        border-radius: 4px;
-        box-shadow: 0 0 0 1px #ccc;
-    }
-
-    .card-header {
-        padding: 6px;
-        background: #e9ecef;
+    .form-container {
+        width: 95%;
+        margin: auto;
     }
 
     .card-title {
@@ -32,8 +25,32 @@
         color: #333;
     }
 
-    .form-control,
-    .form-select {
+    table {
+        font-size: 11px;
+    }
+
+    table th,
+    table td {
+        padding: 3px 6px !important;
+        vertical-align: middle;
+    }
+
+    thead th {
+        padding: 4px 6px !important;
+        font-size: 11px;
+    }
+
+    td.text-end {
+        width: 60px;
+        padding-right: 4px !important;
+    }
+
+    .switch {
+        margin: 0;
+        float: right;
+    }
+
+    .form-control {
         height: 24px !important;
         padding: 0 6px !important;
         font-size: 12px !important;
@@ -41,26 +58,18 @@
         border-radius: 3px !important;
     }
 
-    .card-footer .btn {
-        font-size: 14px;
-        padding: 6px 24px;
-        border-radius: 4px;
+    .btn {
+        padding: 4px 12px;
+        font-size: 12px;
     }
 
-    .row > [class*="col-"] {
-        margin-bottom: 3px;
-    }
-
-    .custom-legend {
-        font-size: 11px;
-        font-weight: 700;
-        color: #1f7734ff;
-    }
-
-    .custom-fieldset {
-        border: 1px solid #bbb;
-        border-radius: 4px;
+    fieldset {
         padding: 8px;
+    }
+
+    legend {
+        font-size: 12px;
+        padding: 0 6px;
     }
 </style>
 
@@ -71,13 +80,13 @@
 <link rel="stylesheet" href="{{ asset('archivos/fieldset.css') }}">
 </head>
 
-<div class="container-fluid">
+<div class="container">
     <div class="card card-outline card-primary">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <h4 class="card-title mb-0">Editar Usuario</h4>
+        <div class="card-header">
+            <h3 class="card-title">Editar Usuario<small></small></h3>
             <div class="card-tools">
                 <a href="{{ route('usuarios.index') }}" class="btn btn-outline-primary">
-                    Volver al Listado <i class="fas fa-arrow-circle-left ms-1"></i>
+                    Volver al Listado <i class="fas fa-arrow-circle-left pl-1"></i>
                 </a>
             </div>
         </div>
@@ -144,8 +153,13 @@
                     </div>
                 </fieldset>
 
-                <div class="card-footer text-center" style="background: transparent; border: none; padding-bottom: 0; padding-top: 20px;">
-                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4 text-center">
+                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>

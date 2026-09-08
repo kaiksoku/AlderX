@@ -24,7 +24,6 @@ Auth::routes(['register' => false]);
 // Principal---------------------------------------------------------------------------------------------------------------------------------
 
 
-
 //Administrador------------------------------------------------------------------------------------------------------------------------------
 Route::get('usuarios/create', [RegisterController::class, 'create'])->middleware('auth')->middleware('can:Crear Usuarios')->name('usuarios.create');
 Route::get('usuarios', [UsuariosController::class, 'index'])->middleware(['auth', 'can:Ver Usuarios'])->name('usuarios.index');
@@ -37,11 +36,12 @@ Route::post('usuarios/guardar', [RegisterController::class, 'register'])->middle
 Route::get('roles', [RolesController::class, 'show'])->middleware(['auth', 'can:Ver Roles'])->name('roles');
 Route::get('roles/create', [RolesController::class, 'create'])->middleware(['auth', 'can:Crear Roles'])->name('roles.create');
 Route::post('roles/guardar', [RolesController::class, 'store'])->middleware(['auth', 'can:Crear Roles'])->name('roles.guardar');
+Route::get('roles/{role}/edit', [RolesController::class, 'edit'])->middleware(['auth', 'can:Editar Roles'])->name('roles.editar');
+Route::put('roles/{role}', [RolesController::class, 'update'])->middleware(['auth', 'can:Editar Roles'])->name('roles.actualizar');
 Route::get('roles/eliminar/{id}', [RolesController::class, 'destroy'])->middleware(['auth', 'can:Eliminar Roles'])->name('roles.eliminar');
 
 
 // Inicia Rutas generales---------------------------------------------------------------------------------------------------------------------
-
 
 // Módulo inicio de sesión
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -52,9 +52,9 @@ Route::get('home', [HomeController::class, 'index'])->middleware(['auth', 'can:V
 Route::get('chassis', [ChassisController::class, 'show'])->middleware(['auth', 'can:Ver Chassis'])->name('chassis');
 Route::get('chassis/create', [ChassisController::class, 'create'])->middleware(['auth', 'can:Crear Chassis'])->name('chassis.create');
 Route::post('chassis/guardar', [ChassisController::class, 'store'])->middleware(['auth', 'can:Crear Chassis'])->name('chassis.guardar');
-Route::get('/chassis/edit/{id}', [ChassisController::class, 'edit'])->middleware(['auth', 'can:Editar Chassis'])->name('chassis.edit');
-Route::post('/chassis/update', [ChassisController::class, 'update'])->middleware(['auth', 'can:Editar Chassis'])->name('chassis.update');
-Route::get('/chassis/destroy/{id}', [ChassisController::class, 'destroy'])->middleware(['auth', 'can:Eliminar Chassis'])->name('chassis.destroy');
+Route::get('chassis/edit/{id}', [ChassisController::class, 'edit'])->middleware(['auth', 'can:Editar Chassis'])->name('chassis.editar');
+Route::post('chassis/update', [ChassisController::class, 'update'])->middleware(['auth', 'can:Editar Chassis'])->name('chassis.actualizar');
+Route::get('chassis/destroy/{id}', [ChassisController::class, 'destroy'])->middleware(['auth', 'can:Eliminar Chassis'])->name('chassis.destroy');
 
 // Módulo Genset
 Route::get('genset', [GensetController::class, 'show'])->middleware(['auth', 'can:Ver Genset'])->name('genset');
