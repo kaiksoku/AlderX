@@ -4,6 +4,7 @@
 
 <head>
     <link rel="stylesheet" href="{{ asset('archivos/despacho/formdespacho.css') }}">
+    <link rel="stylesheet" href="{{ asset('archivos/tables/alerts.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
@@ -16,6 +17,23 @@
     }
 </style>
 
+{{-- ================= ALERTAS DE MENSAJES ================= --}}
+@if(session('mensaje'))
+    <div class="mensaje-alert success">
+        {{ session('mensaje') }}
+    </div>
+@endif
+
+@if($errors->any())
+    <div class="mensaje-alert danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <div class="container-fluid">
 <div class="card card-outline card-success">
 
@@ -24,7 +42,7 @@
         <h4>REGISTRO DE SALIDA DE EQUIPO | PUERTO BARRIOS</h4>
     </div>
 
-    <form method="POST">
+    <form method="POST" action="{{ route('salidas.store') }}">
         @csrf
 
         <div class="card-body">
@@ -45,7 +63,14 @@
                     </div>
                     <div class="col-md-3 text-left">
                         <label>Boleta / EIR</label>
-                        <input type="number" class="form-control" name="mov_boleta" required>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            name="mov_boleta" 
+                            id="mov_boleta"
+                            readonly
+                            placeholder="Se genera automáticamente"
+                        >
                     </div>
                     <div class="col-md-3 text-left">
                         <label>Fecha</label>
@@ -626,13 +651,11 @@
                 id="btn-guardar"
                 type="submit"
                 class="btn btn-success"
-                style="background-color:#1f7734ff; border-color:#1f7734ff;"
-                onclick="validarHora(event)">GUARDAR
+                style="background-color:#1f7734ff; border-color:#1f7734ff;">
+                GUARDAR
             </button>
 
-
-
-            <button type="button" class="btn btn-danger ml-3">CANCELAR</button>
+            <button type="button" class="btn btn-danger ml-3" onclick="window.history.back()">CANCELAR</button>
         </div>
 
     </form>
@@ -648,34 +671,25 @@ document.addEventListener('DOMContentLoaded', function () {
     // Forzar mayúsculas en todos los campos input y textarea
     document.querySelectorAll('input, textarea').forEach(function(input) {
         input.addEventListener('input', function() {
-            // Solo aplica a campos de texto, email, search, number, password, etc.
             if (this.type !== 'password' && this.type !== 'hidden') {
                 this.value = this.value.toUpperCase();
             }
         });
     });
-});
 
-
-                     
-document.addEventListener('DOMContentLoaded', function () {
+    // Configurar hora
     const inputHora = document.getElementById('hora');
-
-    inputHora.addEventListener('input', () => {
-        let valor = inputHora.value.replace(/\D/g, '');
-
-        if (valor.length >= 3) {
-            valor = valor.substring(0,2) + ':' + valor.substring(2,4);
-        }
-
-        inputHora.value = valor;
-    });
+    if (inputHora) {
+        inputHora.addEventListener('input', () => {
+            let valor = inputHora.value.replace(/\D/g, '');
+            if (valor.length >= 3) {
+                valor = valor.substring(0,2) + ':' + valor.substring(2,4);
+            }
+            inputHora.value = valor;
+        });
+    }
 });
-
-
-
-                    </script>
-
+</script>
 
 </div>
 </div>

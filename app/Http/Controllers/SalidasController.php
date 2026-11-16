@@ -6,15 +6,25 @@ use Illuminate\Http\Request;
 use App\Models\Chassis;
 use App\Models\Genset;
 use App\Models\User;
-
+use App\Http\Requests\StoreMovimientoSalidaRequest;
+use App\Services\GuardarMovimientoSalidaService;
+use App\Services\TicketNumberService;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class SalidasController extends Controller
 {
-    public function __construct()
+    protected GuardarMovimientoSalidaService $guardarService;
+
+    public function __construct(GuardarMovimientoSalidaService $guardarService)
     {
         $this->middleware('auth');
+        $this->guardarService = $guardarService;
     }
 
+    /**
+     * Mostrar formulario de registro de salida
+     */
     public function show()
     {
         $chassis = Chassis::orderBy('chass_numero')->pluck('chass_numero');
@@ -22,57 +32,60 @@ class SalidasController extends Controller
         return view('operaciones.salidas.salidascreate', compact('chassis', 'users'));
     }
 
-// Valida en el formulario de salida que el CHASSIS existe antes de dejar pasar --------------------------    
+    /**
+     * Validar que el CHASSIS existe y está disponible
+     */
     public function validarChassis(Request $request)
-{
-    $request->validate([
-        'chass_numero' => 'required|numeric'
-    ]);
+    {
+        $request->validate([
+            'chass_numero' => 'required|numeric'
+        ]);
 
-    $chassis = Chassis::where('chass_numero', $request->chass_numero)->first();
+        $chassis = Chassis::where('chass_numero', $request->chass_numero)->first();
 
-    if (!$chassis) {
+        if (!$chassis) {
+            return response()->json([
+                'status' => 'no_existe'
+            ]);
+        }
+
+        if ($chassis->chass_estado === 'Taller') {
+            return response()->json([
+                'status' => 'taller'
+            ]);
+        }
+
         return response()->json([
-            'status' => 'no_existe'
+            'status' => 'valido',
+            'placa'  => $chassis->chass_placa,
+            'id'     => $chassis->chass_id
         ]);
     }
 
-    if ($chassis->chass_estado === 'Taller') {
+    /**
+     * Validar que el GENSET existe y está disponible
+     */
+    public function validarGenset(Request $request)
+    {
+        $genset = Genset::where('gen_numero', $request->gen_numero)->first();
+
+        if (!$genset) {
+            return response()->json([
+                'status' => 'no_existe'
+            ]);
+        }
+
+        if ($genset->gen_estado === 'taller') {
+            return response()->json([
+                'status' => 'taller'
+            ]);
+        }
+
         return response()->json([
-            'status' => 'taller'
+            'status' => 'valido',
+            'id'     => $genset->gen_id
         ]);
     }
-
-    return response()->json([
-        'status' => 'valido',
-        'placa'  => $chassis->chass_placa, // ajusta si el nombre es otro
-        'id'     => $chassis->chass_id // ajusta si el nombre es otro
-    ]);
-}
-
-// Valida en el formulario de salida que el GENSET existe antes de dejar pasar --------------------------  
-public function validarGenset(Request $request)
-{
-    $genset = Genset::where('gen_numero', $request->gen_numero)->first();
-
-    if (!$genset) {
-        return response()->json([
-            'status' => 'no_existe'
-        ]);
-    }
-
-    if ($genset->gen_estado === 'taller') {
-        return response()->json([
-            'status' => 'taller'
-        ]);
-    }
-
-    return response()->json([
-        'status' => 'valido',
-        'id'     => $genset->gen_id // ajusta si el nombre es otro
-    ]);
-}
-
 
     public function create()
     {
@@ -80,16 +93,43 @@ public function validarGenset(Request $request)
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guardar un nuevo movimiento de salida
+     * 
+     * @param StoreMovimientoSalidaRequest $request Datos validados del formulario
+     * @return \Illuminate\Http\RedirectResponse Redirección con mensaje de éxito o error
      */
-    public function store(Request $request)
+    public function store(StoreMovimientoSalidaRequest $request)
     {
-        //
+        try {
+            // Validar que el usuario tiene recinto asignado
+            if (!auth()->user()->recinto) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['recinto' => 'El usuario no tiene recinto asignado']);
+            }
+
+            // Guardar movimiento usando el servicio
+            $resultado = $this->guardarService->guardar($request->validated());
+
+            // Redirección con mensaje de éxito
+            return redirect()->route('salidas')
+                ->with('mensaje', 'Salida creada con éxito, número de boleta: ' . $resultado['boleta']);
+
+        } catch (Exception $e) {
+            // Redirección con mensaje de error
+            return redirect()->back()
+                ->withInput()
+                ->with('mensaje de error', 'Error al guardar la salida: ' . $e->getMessage());
+        }
     }
 
     /**
      * Display the specified resource.
      */
+    public function show_resource(string $id)
+    {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.

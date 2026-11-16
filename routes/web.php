@@ -61,6 +61,7 @@ Route::get('genset', [GensetController::class, 'show'])->middleware(['auth', 'ca
 
 // Módulo Salidas 
 Route::get('salidas', [SalidasController::class, 'show'])->middleware(['auth', 'can:Ver Salidas'])->name('salidas');
+Route::post('salidas', [SalidasController::class, 'store'])->middleware(['auth', 'can:Ver Salidas'])->name('salidas.store');
 Route::get('ajax/validar-chassis', [SalidasController::class, 'validarChassis'])->middleware(['auth', 'can:Ver Salidas'])->name('validarchassis');
 Route::get('ajax/validar-genset', [SalidasController::class, 'validarGenset'])->middleware(['auth', 'can:Ver Salidas'])->name('validargenset');
 
