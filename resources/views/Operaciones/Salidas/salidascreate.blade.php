@@ -212,7 +212,7 @@
                                 <option value="{{ $id }}">{{ $name }}</option>
                             @endforeach
                         </select>
-                        <label>Digitador</label><input class="form-control" name="mov_digitador" value="{{ auth()->user()->name ?? '' }}" readonly>
+                        <label>Digitador</label><input class="form-control" type="hidden" name="mov_digitador" value="{{ auth()->user()->id }}" readonly><input class="form-control" value="{{ auth()->user()->name ?? '' }}" readonly disabled>
                         <label>Movimiento</label><input value="Salida" class="form-control" name="mov_movimiento" readonly>
                         <div class="d-flex justify-content-center mt-3">
                                     <button type="button" 
@@ -389,79 +389,6 @@
                             </div>
                         </div>
                     </div>
-<div class="container mt-3">
-    <div class="row">
-
-        <!-- ================= CHASSIS ================= -->
-        <div class="col-md-6">
-            <div class="form-section">
-            <h6>Revisión Chassis</h6>
-            <table class="table table-bordered text-center">
-                <thead>
-                    <tr>
-                        <th>Sistema</th>
-                        <th class="text-success">Bueno</th>
-                        <th class="text-danger">Malo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php
-                        $chassisItems = ['Suspension','Guardafangos','Patas','Luces','Seguridad','Estructura General'];
-                    @endphp
-
-                    @foreach($chassisItems as $item)
-                    <tr>
-                        <td>{{ $item }}</td>
-                        <td>
-                            <input type="radio" name="mov_ch_{{ strtolower(str_replace(' ', '_', $item)) }}" value="bueno" required style="accent-color:#28a745;">
-                        </td>
-                        <td>
-                            <input type="radio" name="mov_ch_{{ strtolower(str_replace(' ', '_', $item)) }}" value="malo">
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            </div>
-        </div>
-
-        <!-- ================= GENSET ================= -->
-        <div class="col-md-6">
-             <div class="form-section">
-            <h6>Revisión Genset</h6>
-            <table class="table table-bordered text-center">
-                <thead>
-                    <tr>
-                        <th>Sistema</th>
-                        <th class="text-success">Bueno</th>
-                        <th class="text-danger">Malo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php
-                        $gensetItems = ['Puertas','Tapon','Argolla','Blindajes','Estructura General'];
-                    @endphp
-
-                    @foreach($gensetItems as $item)
-                    <tr>
-                        <td>{{ $item }}</td>
-                        <td>
-                            <input type="radio" name="mov_gs_{{ strtolower(str_replace(' ', '_', $item)) }}" value="bueno" required style="accent-color:#28a745;">
-                        </td>
-                        <td>
-                            <input type="radio" name="mov_gs_{{ strtolower(str_replace(' ', '_', $item)) }}" value="malo">
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
                 </div>
             </div>
 
@@ -637,6 +564,77 @@
                 </div>
 
             </div>
+            {{-- ================= INSPECCIONES ================= --}}
+            <div class="row">
+
+                <!-- ================= CHASSIS ================= -->
+                <div class="col-md-6">
+                    <div class="form-section">
+                    <h6>Revisión Chassis</h6>
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>Sistema</th>
+                                <th class="text-success">Bueno</th>
+                                <th class="text-danger">Malo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $chassisItems = ['Suspension','Guardafangos','Patas','Luces','Seguridad','Estructura General'];
+                            @endphp
+
+                            @foreach($chassisItems as $item)
+                            <tr>
+                                <td>{{ $item }}</td>
+                                <td>
+                                    <input type="radio" name="mov_ch_{{ strtolower(str_replace(' ', '_', $item)) }}" value="bueno" required style="accent-color:#28a745;">
+                                </td>
+                                <td>
+                                    <input type="radio" name="mov_ch_{{ strtolower(str_replace(' ', '_', $item)) }}" value="malo">
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+
+                <!-- ================= GENSET ================= -->
+                <div class="col-md-6">
+                     <div class="form-section">
+                    <h6>Revisión Genset</h6>
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>Sistema</th>
+                                <th class="text-success">Bueno</th>
+                                <th class="text-danger">Malo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $gensetItems = ['Puertas','Tapon','Argolla','Blindajes','Estructura General'];
+                            @endphp
+
+                            @foreach($gensetItems as $item)
+                            <tr>
+                                <td>{{ $item }}</td>
+                                <td>
+                                    <input type="radio" name="mov_gs_{{ strtolower(str_replace(' ', '_', $item)) }}" value="bueno" required style="accent-color:#28a745;">
+                                </td>
+                                <td>
+                                    <input type="radio" name="mov_gs_{{ strtolower(str_replace(' ', '_', $item)) }}" value="malo">
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+
+            </div>
+
             {{-- ================= OBSERVACIONES ================= --}}
             <div class="form-section">
                 <h6>Observaciones</h6>
