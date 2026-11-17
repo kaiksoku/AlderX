@@ -8,14 +8,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const inputChassisId = document.getElementById('mov_chassis_id');
 
     let chassisValido = false;
+    let chassisTieneIngresoValido = false;
     let sinMotor = false;
 
     function actualizarEstadoBotonGuardar() {
-        if (sinMotor) {
-            btnGuardar.disabled = !chassisValido;
-        } else {
-            btnGuardar.disabled = !(chassisValido && gensetValido);
-        }
+        // El botón guardar siempre está activo.
+        // Las validaciones se harán cuando se envíe el formulario.
+        btnGuardar.disabled = false;
     }
 
     // ================= Checkbox despacho sin motor =================
@@ -130,6 +129,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         inputChassisId.value = data.id ?? '';
 
                         chassisValido = true;
+
+                        // 🔥 NUEVO: Obtener último ingreso cuando el chassis es válido
+                        if (typeof obtenerUltimoIngresoChassis === 'function') {
+                            obtenerUltimoIngresoChassis(valor);
+                        }
 
                     break;
 
@@ -464,28 +468,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // ---------------- Hora automática ----------------
 
-document.getElementById("btn-guardar").addEventListener("click", function(event) {
-
-    const campoHora = document.getElementById("hora");
-
-    if (campoHora.value === "") {
-
-        event.preventDefault();
-
-        const confirmar = confirm(
-            "La hora está vacía.\nSe actualizará con la hora actual.\n\n¿Desea continuar?"
-        );
-
-        if (!confirmar) return;
-
-        const ahora = new Date();
-
-        const horas = String(ahora.getHours()).padStart(2, '0');
-        const minutos = String(ahora.getMinutes()).padStart(2, '0');
-
-        campoHora.value = `${horas}:${minutos}`;
-
-        this.closest("form").submit();
-    }
-
-});
+// Lógica de hora removida - se llena desde el backend

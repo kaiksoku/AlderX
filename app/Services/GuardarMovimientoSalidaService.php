@@ -44,7 +44,7 @@ class GuardarMovimientoSalidaService
                 // 2. Preparar datos para guardado
                 $datosMovimiento = $this->prepararDatos($datos, $boleta);
                 
-                // 3. Guardar movimiento
+                // 3. Guardar movimiento con todas las inspecciones incluidas
                 $movimiento = Movimiento::create($datosMovimiento);
                 
                 Log::info('Movimiento de salida guardado exitosamente', [
@@ -84,7 +84,7 @@ class GuardarMovimientoSalidaService
             // Datos generales
             'mov_boleta' => $boleta,
             'mov_fecha' => $datos['mov_fecha'] ?? null,
-            'mov_hora' => $datos['mov_hora'] ?? null,
+            'mov_hora' => $datos['mov_hora'] ?: now()->format('H:i'),
             'mov_recinto' => auth()->user()->recinto,
             'mov_condicionista' => $datos['mov_condicionista'] ?? null,
             'mov_digitador' => auth()->id(),
@@ -190,6 +190,21 @@ class GuardarMovimientoSalidaService
 
             // Observaciones
             'mov_observaciones' => $datos['mov_observaciones'] ?? null,
+
+            // Inspecciones Chassis
+            'mov_ch_suspension' => $datos['mov_ch_suspension'] ?? null,
+            'mov_ch_guardafangos' => $datos['mov_ch_guardafangos'] ?? null,
+            'mov_ch_patas' => $datos['mov_ch_patas'] ?? null,
+            'mov_ch_luces' => $datos['mov_ch_luces'] ?? null,
+            'mov_ch_seguridad' => $datos['mov_ch_seguridad'] ?? null,
+            'mov_ch_estructura_general' => $datos['mov_ch_estructura_general'] ?? null,
+
+            // Inspecciones Genset
+            'mov_gs_puertas' => $datos['mov_gs_puertas'] ?? null,
+            'mov_gs_tapon' => $datos['mov_gs_tapon'] ?? null,
+            'mov_gs_argolla' => $datos['mov_gs_argolla'] ?? null,
+            'mov_gs_blindajes' => $datos['mov_gs_blindajes'] ?? null,
+            'mov_gs_estructura_general' => $datos['mov_gs_estructura_general'] ?? null,
         ];
     }
 
@@ -203,5 +218,52 @@ class GuardarMovimientoSalidaService
         }
 
         return $salida - $cargados;
+    }
+
+    /**
+     * Guarda las inspecciones de chassis y genset en sus tablas separadas
+     */
+    protected function guardarInspecciones(Movimiento $movimiento, array $datos): void
+    {
+        // Guardar inspecciones de chassis - Convertir 'bueno'/'malo' a 'B'/'M'
+        DB::table('inspecciones_chassis')->insert([
+            'mov_id' => $movimiento->mov_id,
+            'suspension' => $this->sanitizarInspeccion($datos['mov_ch_suspension'] ?? null),
+            'guardafangos' => $this->sanitizarInspeccion($datos['mov_ch_guardafangos'] ?? null),
+            'patas' => $this->sanitizarInspeccion($datos['mov_ch_patas'] ?? null),
+            'luces' => $this->sanitizarInspeccion($datos['mov_ch_luces'] ?? null),
+            'seguridad' => $this->sanitizarInspeccion($datos['mov_ch_seguridad'] ?? null),
+            'estructura_general' => $this->sanitizarInspeccion($datos['mov_ch_estructura_general'] ?? null),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Guardar inspecciones de genset - Convertir 'bueno'/'malo' a 'B'/'M'
+        DB::table('inspecciones_genset')->insert([
+            'mov_id' => $movimiento->mov_id,
+            'puertas' => $this->sanitizarInspeccion($datos['mov_gs_puertas'] ?? null),
+            'tapon' => $this->sanitizarInspeccion($datos['mov_gs_tapon'] ?? null),
+            'argolla' => $this->sanitizarInspeccion($datos['mov_gs_argolla'] ?? null),
+            'blindajes' => $this->sanitizarInspeccion($datos['mov_gs_blindajes'] ?? null),
+            'estructura_general' => $this->sanitizarInspeccion($datos['mov_gs_estructura_general'] ?? null),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
+
+    /**
+     * Convierte 'bueno' a 'B' y 'malo' a 'M'
+     */
+    protected function sanitizarInspeccion(?string $valor): ?string
+    {
+        if ($valor === null) {
+            return null;
+        }
+
+        return match (strtolower($valor)) {
+            'bueno' => 'B',
+            'malo' => 'M',
+            default => $valor[0] ?? null,
+        };
     }
 }

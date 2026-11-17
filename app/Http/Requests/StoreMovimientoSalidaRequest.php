@@ -15,6 +15,28 @@ class StoreMovimientoSalidaRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        // Sanitizar y normalizar datos de inspecciones
+        $inspections = [
+            'mov_ch_suspension', 'mov_ch_guardafangos', 'mov_ch_patas', 
+            'mov_ch_luces', 'mov_ch_seguridad', 'mov_ch_estructura_general',
+            'mov_gs_puertas', 'mov_gs_tapon', 'mov_gs_argolla', 
+            'mov_gs_blindajes', 'mov_gs_estructura_general'
+        ];
+
+        foreach ($inspections as $field) {
+            $value = $this->input($field);
+            // Convertir a minúsculas y limpiar espacios
+            if ($value) {
+                $this->merge([$field => strtolower(trim($value))]);
+            }
+        }
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      */
     public function rules(): array
@@ -22,7 +44,7 @@ class StoreMovimientoSalidaRequest extends FormRequest
         return [
             // Datos generales
             'mov_fecha' => 'required|date',
-            'mov_hora' => 'required|date_format:H:i',
+            'mov_hora' => 'nullable|date_format:H:i',
             'mov_cabezal' => 'required|string|max:255',
             'mov_placa_cabezal' => 'required|string|max:8|regex:/^C-[0-9]{3}[A-Z]{3}$/',
             'mov_kilometraje' => 'nullable|integer|min:0',
@@ -126,20 +148,20 @@ class StoreMovimientoSalidaRequest extends FormRequest
             // Observaciones
             'mov_observaciones' => 'nullable|string|max:5000',
 
-            // Inspecciones Chassis (todos requeridos)
-            'mov_ch_suspension' => 'required|in:bueno,malo',
-            'mov_ch_guardafangos' => 'required|in:bueno,malo',
-            'mov_ch_patas' => 'required|in:bueno,malo',
-            'mov_ch_luces' => 'required|in:bueno,malo',
-            'mov_ch_seguridad' => 'required|in:bueno,malo',
-            'mov_ch_estructura_general' => 'required|in:bueno,malo',
+            // Inspecciones Chassis
+            'mov_ch_suspension' => 'nullable|in:bueno,malo',
+            'mov_ch_guardafangos' => 'nullable|in:bueno,malo',
+            'mov_ch_patas' => 'nullable|in:bueno,malo',
+            'mov_ch_luces' => 'nullable|in:bueno,malo',
+            'mov_ch_seguridad' => 'nullable|in:bueno,malo',
+            'mov_ch_estructura_general' => 'nullable|in:bueno,malo',
 
-            // Inspecciones Genset (todos requeridos)
-            'mov_gs_puertas' => 'required|in:bueno,malo',
-            'mov_gs_tapon' => 'required|in:bueno,malo',
-            'mov_gs_argolla' => 'required|in:bueno,malo',
-            'mov_gs_blindajes' => 'required|in:bueno,malo',
-            'mov_gs_estructura_general' => 'required|in:bueno,malo',
+            // Inspecciones Genset
+            'mov_gs_puertas' => 'nullable|in:bueno,malo',
+            'mov_gs_tapon' => 'nullable|in:bueno,malo',
+            'mov_gs_argolla' => 'nullable|in:bueno,malo',
+            'mov_gs_blindajes' => 'nullable|in:bueno,malo',
+            'mov_gs_estructura_general' => 'nullable|in:bueno,malo',
         ];
     }
 
@@ -150,7 +172,6 @@ class StoreMovimientoSalidaRequest extends FormRequest
     {
         return [
             'mov_fecha.required' => 'La fecha es requerida',
-            'mov_hora.required' => 'La hora es requerida',
             'mov_cabezal.required' => 'El cabezal es requerido',
             'mov_placa_cabezal.required' => 'La placa del cabezal es requerida',
             'mov_placa_cabezal.regex' => 'El formato de placa debe ser C-123ABC',

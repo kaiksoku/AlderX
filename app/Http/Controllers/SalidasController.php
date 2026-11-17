@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Chassis;
 use App\Models\Genset;
 use App\Models\User;
+use App\Models\Movimiento;
 use App\Http\Requests\StoreMovimientoSalidaRequest;
 use App\Services\GuardarMovimientoSalidaService;
 use App\Services\TicketNumberService;
@@ -28,7 +29,7 @@ class SalidasController extends Controller
     public function show()
     {
         $chassis = Chassis::orderBy('chass_numero')->pluck('chass_numero');
-        $users = User::role('condicionista')->orderBy('name')->pluck('name', 'id');
+        $users = User::orderBy('name')->pluck('name', 'id');
         return view('operaciones.salidas.salidascreate', compact('chassis', 'users'));
     }
 
@@ -87,6 +88,90 @@ class SalidasController extends Controller
         ]);
     }
 
+    /**
+     * Obtener el último ingreso del chassis al recinto actual
+     * Pre-llena datos en el formulario de salida
+     */
+    public function obtenerUltimoIngresoChassis(Request $request)
+    {
+        $request->validate([
+            'chass_numero' => 'required|numeric'
+        ]);
+
+        // Buscar el chassis por número para obtener su ID
+        $chassis = Chassis::where('chass_numero', $request->chass_numero)->first();
+
+        if (!$chassis) {
+            return response()->json([
+                'status' => 'chassis_no_existe',
+                'mensaje' => 'El chassis no existe en el sistema'
+            ]);
+        }
+
+        $recintoActual = auth()->user()->recinto;
+
+        // Buscar el último movimiento del chassis USANDO SU ID
+        $ultimoMovimiento = DB::table('movimientos')
+            ->where('mov_chassis', $chassis->chass_id)  // 🔥 Buscar por ID del chassis
+            ->orderBy('mov_id', 'desc')
+            ->first();
+
+        // Si no hay movimiento, el chassis nunca ha entrado al sistema
+        if (!$ultimoMovimiento) {
+            return response()->json([
+                'status' => 'sin_movimientos',
+                'mensaje' => 'El chassis no tiene historial de movimientos'
+            ]);
+        }
+
+        // Si el último movimiento NO es un ingreso, alertar
+        if ($ultimoMovimiento->mov_tipomovimiento !== 'ingreso') {
+            return response()->json([
+                'status' => 'no_es_ingreso',
+                'mensaje' => 'El chassis no ha ingresado al recinto. El último movimiento registrado no es un ingreso.'
+            ]);
+        }
+
+        // Si el último ingreso no es del recinto actual, alertar
+        if ($ultimoMovimiento->mov_recinto != $recintoActual) {
+            return response()->json([
+                'status' => 'ingreso_otro_recinto',
+                'mensaje' => 'El último ingreso del chassis fue en otro recinto, no en el actual.'
+            ]);
+        }
+
+        // Si llegamos aquí, tenemos un ingreso válido del mismo recinto
+        // Contar cuántas llantas tiene registradas
+        $llantas = [];
+        $cantidadLlantas = 0;
+        
+        for ($i = 1; $i <= 12; $i++) {
+            $quemadoField = "mov_llanta{$i}_quemado";
+            $profundidadField = "mov_llanta{$i}_profundidad";
+            $marcaField = "mov_llanta{$i}_marca";
+
+            if (!empty($ultimoMovimiento->$quemadoField) || 
+                !empty($ultimoMovimiento->$profundidadField) || 
+                !empty($ultimoMovimiento->$marcaField)) {
+                $cantidadLlantas = $i;
+                $llantas[$i] = [
+                    'quemado' => $ultimoMovimiento->$quemadoField ?? '',
+                    'profundidad' => $ultimoMovimiento->$profundidadField ?? '',
+                    'marca' => $ultimoMovimiento->$marcaField ?? ''
+                ];
+            }
+        }
+
+        return response()->json([
+            'status' => 'valido',
+            'pv_chassis' => $ultimoMovimiento->mov_pvchassis,
+            'hubodometro' => $ultimoMovimiento->mov_hubodometro,
+            'cantidad_llantas' => $cantidadLlantas,
+            'llantas' => $llantas,
+            'boleta_ingreso' => $ultimoMovimiento->mov_boleta
+        ]);
+    }
+
     public function create()
     {
         //
@@ -119,7 +204,7 @@ class SalidasController extends Controller
             // Redirección con mensaje de error
             return redirect()->back()
                 ->withInput()
-                ->with('mensaje de error', 'Error al guardar la salida: ' . $e->getMessage());
+                ->with('error', 'Error al guardar la salida: ' . $e->getMessage());
         }
     }
 

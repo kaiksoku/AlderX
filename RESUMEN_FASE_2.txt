@@ -1,0 +1,79 @@
+# RESUMEN EJECUTIVO - FASE 2
+
+## ✅ COMPLETADO: Guardado de Movimientos de Salida
+
+---
+
+### Archivos Creados
+1. **Migración:** `database/migrations/2026_11_16_172400_add_inspecciones_to_movimientos_table.php`
+   - Tablas: `inspecciones_chassis`, `inspecciones_genset`
+
+2. **Modelos:** 
+   - `app/Models/InspeccionChassis.php`
+   - `app/Models/InspeccionGenset.php`
+
+---
+
+### Archivos Modificados
+1. **Service:** `app/Services/GuardarMovimientoSalidaService.php`
+   - Implementa: guardar(), prepararDatos(), guardarInspecciones(), sanitizarInspeccion()
+
+2. **Modelo:** `app/Models/Movimiento.php`
+   - Agregadas relaciones: inspeccionChassis(), inspeccionGenset()
+
+3. **Controlador:** `app/Http/Controllers/SalidasController.php`
+   - Ajuste de mensaje de error
+
+---
+
+### Integración con Fase 1
+✅ **Generación de Boletas:** Integrada de `TicketNumberService`
+- Formato: AAAA-CCCCCCC (Ej: 2026-0000001)
+- Seguridad ante concurrencia
+- Reinicio anual automático
+
+---
+
+### Validaciones
+✅ **Inspecciones Chassis:** 6 campos (suspension, guardafangos, patas, luces, seguridad, estructura_general)
+✅ **Inspecciones Genset:** 5 campos (puertas, tapon, argolla, blindajes, estructura_general)
+✅ **Todos requeridos:** in:bueno,malo
+
+---
+
+### Restricciones de Base de Datos
+✅ `mov_boleta` es UNIQUE → evita duplicados
+✅ Permite compartir boleta entre salida e ingreso
+✅ Foreign keys con CASCADE para integridad referencial
+
+---
+
+### Flujo de Guardado
+```
+Formulario → Validación → Transacción → Guardado
+                                        ├── Movimiento (tabla movimientos)
+                                        ├── Inspecciones Chassis (tabla separada)
+                                        └── Inspecciones Genset (tabla separada)
+```
+
+---
+
+### Seguridad
+✅ Transacciones (rollback automático en error)
+✅ Validaciones multicapa (FormRequest + BD)
+✅ Sanitización de datos
+✅ Protección contra doble clic
+✅ Logging de operaciones
+
+---
+
+### Estado
+✅ Sintaxis correcta
+✅ Migraciones ejecutadas
+✅ Laravel funcional
+✅ Listo para pruebas
+
+---
+
+### Próximo Paso
+**Fase 3:** Implementar ingreso (cierre) reutilizando boleta

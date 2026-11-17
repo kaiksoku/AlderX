@@ -126,6 +126,21 @@ class Movimiento extends Model
 
         // Observaciones
         'mov_observaciones',
+
+        // Inspecciones Chassis
+        'mov_ch_suspension',
+        'mov_ch_guardafangos',
+        'mov_ch_patas',
+        'mov_ch_luces',
+        'mov_ch_seguridad',
+        'mov_ch_estructura_general',
+
+        // Inspecciones Genset
+        'mov_gs_puertas',
+        'mov_gs_tapon',
+        'mov_gs_argolla',
+        'mov_gs_blindajes',
+        'mov_gs_estructura_general',
     ];
 
     // Relaciones
